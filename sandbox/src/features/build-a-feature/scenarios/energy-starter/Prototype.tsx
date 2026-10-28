@@ -18,7 +18,10 @@ export function Prototype() {
   return (
     <div className={styles.frame}>
       <div className={styles.card}>
-        <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
+        <div className={styles.headingBlock}>
+          <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
+          <p className={styles.subheading}>Kies elektriciteit, gas of beide.</p>
+        </div>
         <div className={styles.options} role="radiogroup">
           {options.map((o) => {
             const active = selected === o.id;
@@ -31,6 +34,11 @@ export function Prototype() {
                 className={`${styles.option} ${active ? styles.optionActive : ''}`}
                 onClick={() => setSelected(o.id)}
               >
+                {active && (
+                  <span className={styles.checkBadge} aria-hidden="true">
+                    <CheckIcon />
+                  </span>
+                )}
                 <span className={styles.optionIcon}><o.icon /></span>
                 <span className={styles.optionLabel}>{o.label}</span>
               </button>
@@ -48,6 +56,14 @@ export function Prototype() {
         </div>
       </div>
     </div>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 

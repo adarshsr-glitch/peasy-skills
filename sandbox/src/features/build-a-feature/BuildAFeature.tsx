@@ -12,13 +12,20 @@ type BuildAFeatureProps = {
 // Each tab's state is kept in a Map so switching between tabs preserves
 // chat progress and output.
 type TabState = {
+  briefSent: boolean;
   cursor: number;
   answers: Record<string, string>;
   draft: string;
   done: boolean;
 };
 
-const freshTab = (): TabState => ({ cursor: 0, answers: {}, draft: '', done: false });
+const freshTab = (brief = ''): TabState => ({
+  briefSent: false,
+  cursor: 0,
+  answers: {},
+  draft: brief,
+  done: false,
+});
 
 export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps) {
   const [tabStates, setTabStates] = useState<Record<string, TabState>>({});
@@ -29,7 +36,7 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
   useEffect(() => {
     if (active && !openedRef.current.has(active.id)) {
       openedRef.current.add(active.id);
-      setTabStates((prev) => ({ ...prev, [active.id]: freshTab() }));
+      setTabStates((prev) => ({ ...prev, [active.id]: freshTab(active.vagueBrief) }));
     }
   }, [active]);
 
@@ -41,7 +48,11 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
   }
 
   function resetTab(id: string) {
-    setTabStates((prev) => ({ ...prev, [id]: freshTab() }));
+    const scenario = findScenario(id);
+    setTabStates((prev) => ({
+      ...prev,
+      [id]: freshTab(scenario?.vagueBrief ?? ''),
+    }));
   }
 
   return (
@@ -49,9 +60,9 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
       <header className={styles.header}>
         <div>
           <span className={styles.eyebrow}>Build a feature</span>
-          <h1 className={styles.title}>Pick a scenario to see the pipeline run</h1>
+          <h1 className={styles.title}>Turn a brief into a ticket and a prototype</h1>
           <p className={styles.lede}>
-            Four features that already exist on <a href="https://peasy.be" target="_blank" rel="noreferrer">peasy.be</a>. Each tab opens a short brainstorm chat and emits a Jira draft plus an interactive prototype you can diff against the real site.
+            Open a tab, describe the feature in a line or two, and Studio asks what it needs before drafting a Jira ticket and a working prototype you can share with design and engineering.
           </p>
         </div>
       </header>
@@ -98,22 +109,14 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
   );
 }
 
-function ScenarioEmpty({ onSelect }: { onSelect: (id: string) => void }) {
+function ScenarioEmpty({ onSelect: _onSelect }: { onSelect: (id: string) => void }) {
   return (
     <div className={styles.empty}>
-      <h2>Pick a scenario above</h2>
-      <p>Each one maps to a feature already live on peasy.be.</p>
-      <ul className={styles.emptyList}>
-        {scenarios.map((s) => (
-          <li key={s.id}>
-            <button type="button" className={styles.emptyRow} onClick={() => onSelect(s.id)}>
-              <span className={styles.emptyLabel}>{s.label}</span>
-              <span className={styles.emptyMeta}>{s.description}</span>
-              <span className={styles.emptyArrow}>→</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <h2>Open a tab above to begin</h2>
+      <p>
+        Each tab opens a short brainstorm. Describe the feature, answer a few
+        follow-ups, then review the ticket and prototype side by side.
+      </p>
     </div>
   );
 }

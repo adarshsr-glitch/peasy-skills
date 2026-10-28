@@ -12,10 +12,11 @@ export const homeComparisonPicker: Scenario = {
   description: '"Wat wil je vergelijken?" card on peasy.be/ with 5 verticals.',
   vagueBrief,
   questions: [
-    { id: 'surface', prompt: "Which surface does this card live on? Just the homepage, or every vertical page too?" },
-    { id: 'default-vertical', prompt: "Is any vertical highlighted by default (e.g., the current promo), or are all five visually equal weight?" },
-    { id: 'tracking', prompt: "Do you need click-tracking on each row for analytics? If yes, which event schema?" },
-    { id: 'content-source', prompt: "Where do the vertical labels, icons, and target URLs come from — a CMS, hardcoded, or a config file?" },
+    { id: 'surface', prompt: "Where across the site should this card appear?" },
+    { id: 'default-vertical', prompt: "Which vertical, if any, should be visually prioritized?" },
+    { id: 'tracking', prompt: "What click-tracking event should fire when a visitor taps a row?" },
+    { id: 'content-source', prompt: "Where should the labels, icons, and target routes be sourced from?" },
+    { id: 'mobile', prompt: "How should the card behave at phone width?" },
   ],
   Prototype,
   generateMarkdown(answers) {
@@ -23,6 +24,7 @@ export const homeComparisonPicker: Scenario = {
     const defaultVertical = answers['default-vertical'] ?? '[open]';
     const tracking = answers.tracking ?? '[open]';
     const contentSource = answers['content-source'] ?? '[open]';
+    const mobile = answers.mobile ?? '[open]';
     return [
       '# Home · Vertical comparison picker',
       '',
@@ -82,11 +84,11 @@ export const homeComparisonPicker: Scenario = {
       '',
       '## Visual spec',
       '',
-      '- Card background: cyan tint (`--cyan` at reduced alpha; observable on peasy.be).',
-      '- Row divider: subtle grey (`--border-subtle`).',
-      '- Row hover: slight indigo tint, chevron slides right ~4px.',
-      '- Icon treatment: circular container with cyan accent.',
-      '- Section heading: "Wat wil je vergelijken?" in Grold display font.',
+      '- Card background: lavender surface (`--lavender`) with a thin cyan accent strip at the top edge.',
+      '- Row surface: `--surface-base` with subtle shadow; hover lifts by 1px and reveals a chevron slide.',
+      '- Icon treatment: circular container with cyan accent, indigo stroke icons.',
+      '- Section heading: "Wat wil je vergelijken?" in Grold display font with a short subtitle beneath.',
+      `- Phone-width behavior: ${mobile}`,
       '',
       '## Open questions',
       '',

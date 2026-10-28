@@ -4,6 +4,7 @@ import type { Scenario } from './scenarios/types';
 import styles from './ScenarioTab.module.css';
 
 type TabState = {
+  briefSent: boolean;
   cursor: number;
   answers: Record<string, string>;
   draft: string;
@@ -23,12 +24,7 @@ export function ScenarioTab({ scenario, state, onUpdate, onReset }: ScenarioTabP
       <div className={styles.header}>
         <div>
           <h2 className={styles.title}>{scenario.label}</h2>
-          <p className={styles.meta}>
-            Mirrors{' '}
-            <a href={scenario.peasyUrl} target="_blank" rel="noreferrer" className={styles.link}>
-              {scenario.peasyUrl.replace(/^https?:\/\//, '')}
-            </a>
-          </p>
+          <p className={styles.meta}>{scenario.description}</p>
         </div>
         <div className={styles.headerActions}>
           <button type="button" className={styles.resetBtn} onClick={onReset}>

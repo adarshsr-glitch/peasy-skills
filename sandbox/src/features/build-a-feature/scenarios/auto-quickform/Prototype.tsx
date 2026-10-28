@@ -17,6 +17,10 @@ export function Prototype() {
   return (
     <div className={styles.frame}>
       <div className={styles.card}>
+        <div className={styles.headingBlock}>
+          <h2 className={styles.heading}>Vind je autoverzekering</h2>
+          <p className={styles.subheading}>Vul drie velden in en we vergelijken de aanbieders voor je.</p>
+        </div>
         <div className={styles.row}>
           <Field label="Bouwjaar" required>
             <input
@@ -53,6 +57,9 @@ export function Prototype() {
             </select>
           </Field>
         </div>
+        <p className={styles.helper}>
+          Alle velden zijn vereist. Je gegevens worden niet opgeslagen.
+        </p>
         <div className={styles.actions}>
           <button type="button" className={styles.submit} disabled={!canSubmit}>
             Vergelijk

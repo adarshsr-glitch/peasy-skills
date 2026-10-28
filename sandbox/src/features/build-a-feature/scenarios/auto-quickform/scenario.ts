@@ -12,15 +12,17 @@ export const autoQuickform: Scenario = {
   description: 'Bouwjaar / Merk / Brandstof form on peasy.be/autoverzekering/.',
   vagueBrief,
   questions: [
-    { id: 'validation', prompt: "Should 'Vergelijk' be disabled until all three fields are filled, or validated server-side on submit?" },
-    { id: 'brand-source', prompt: "Where do the car brands come from — a static list, a maintained CMS, or an external API?" },
-    { id: 'post-submit', prompt: "After 'Vergelijk' is clicked, does the user go to a new page, scroll to a stepped form, or see inline results?" },
+    { id: 'validation', prompt: "How should the Vergelijk button behave when a field is empty?" },
+    { id: 'brand-source', prompt: "Where should the car-brand list be sourced from?" },
+    { id: 'post-submit', prompt: "What should happen on screen immediately after Vergelijk is clicked?" },
+    { id: 'plate-shortcut', prompt: "Should the form also accept a licence plate as a shortcut?" },
   ],
   Prototype,
   generateMarkdown(answers) {
     const validation = answers.validation ?? '[open]';
     const brandSource = answers['brand-source'] ?? '[open]';
     const postSubmit = answers['post-submit'] ?? '[open]';
+    const plate = answers['plate-shortcut'] ?? '[open]';
     return [
       '# Auto · Quick-start comparison form',
       '',
@@ -67,6 +69,7 @@ export const autoQuickform: Scenario = {
       `- Validation: ${validation}`,
       `- Brand list source: ${brandSource}`,
       `- Post-submit behavior: ${postSubmit}`,
+      `- Licence-plate shortcut: ${plate}`,
       '- Fuel options observable on peasy.be: Benzine, Diesel, Hybride, Elektrisch, LPG, CNG.',
       '- Bouwjaar accepts a 4-digit year (likely 1990–current).',
       '',
@@ -87,7 +90,7 @@ export const autoQuickform: Scenario = {
       '',
       '## Open questions',
       '',
-      '- `[open]` — Do we offer a "License plate instead" shortcut (common Belgian pattern)?',
+      '- `[open]` — Dark-mode handling if the vertical landing page ever gets a dark variant.',
       '',
       '## Dependencies',
       '',

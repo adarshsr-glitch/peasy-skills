@@ -12,15 +12,17 @@ export const energyStarter: Scenario = {
   description: 'Three-option card from peasy.be/energie/ to kick off the comparison flow.',
   vagueBrief,
   questions: [
-    { id: 'default-selection', prompt: "Is any option selected by default when the card loads, or does the user have to tap one before 'Volgende' enables?" },
-    { id: 'next-flow', prompt: "Where does 'Volgende' route to for each option? Same URL with a query param, or three different routes?" },
-    { id: 'edge-cases', prompt: "Any users without gas (apartments) or without electricity (rare) you want to steer differently?" },
+    { id: 'default-selection', prompt: "Which option, if any, should be preselected when the card loads?" },
+    { id: 'next-flow', prompt: "What should 'Volgende' route to for each selected option?" },
+    { id: 'edge-cases', prompt: "How should the flow handle visitors who only consume one of the two?" },
+    { id: 'copy', prompt: "Any constraints on the tile copy or iconography — Dutch and French labels, specific terminology?" },
   ],
   Prototype,
   generateMarkdown(answers) {
     const def = answers['default-selection'] ?? '[open]';
     const next = answers['next-flow'] ?? '[open]';
     const edge = answers['edge-cases'] ?? '[open]';
+    const copy = answers.copy ?? '[open]';
     return [
       '# Energy · Electricity / Gas / Both starter',
       '',
@@ -62,6 +64,7 @@ export const energyStarter: Scenario = {
       `- Default selection: ${def}`,
       `- Routing after "Volgende": ${next}`,
       `- Edge cases: ${edge}`,
+      `- Copy and iconography constraints: ${copy}`,
       '',
       '## Visual spec',
       '',

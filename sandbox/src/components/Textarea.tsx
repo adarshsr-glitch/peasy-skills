@@ -34,7 +34,7 @@ export function Textarea({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && onEnter) {
+          if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing && onEnter) {
             e.preventDefault();
             onEnter();
           }

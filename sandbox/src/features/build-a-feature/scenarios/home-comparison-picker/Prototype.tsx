@@ -25,7 +25,10 @@ export function Prototype() {
   return (
     <div className={styles.frame}>
       <div className={styles.card}>
-        <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
+        <div className={styles.headingBlock}>
+          <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
+          <p className={styles.subheading}>Kies een vertical om te starten.</p>
+        </div>
         <ul className={styles.list}>
           {verticals.map((v) => (
             <li key={v.id}>
@@ -34,7 +37,7 @@ export function Prototype() {
                   <v.Icon />
                 </span>
                 <span className={styles.label}>{v.label}</span>
-                <span className={styles.arrow} aria-hidden="true">
+                <span className={styles.chevron} aria-hidden="true">
                   <ArrowIcon />
                 </span>
               </a>
@@ -91,8 +94,8 @@ function ShieldIcon() {
 
 function ArrowIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

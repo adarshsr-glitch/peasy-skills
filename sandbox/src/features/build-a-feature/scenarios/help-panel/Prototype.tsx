@@ -24,9 +24,9 @@ const tiles = [
   {
     id: 'afspraak',
     icon: CalendarIcon,
-    title: 'Afspraak plannen voor je hypotheek',
-    description: 'Boek een afspraak in de agenda van een expert',
-    cta: 'Afspraak plannen',
+    title: 'Afspraak plannen',
+    description: 'Boek een gesprek in de agenda van een expert.',
+    cta: 'Plannen',
     href: '#',
   },
   {
@@ -52,8 +52,10 @@ export function Prototype() {
           {tiles.map((t) => (
             <article key={t.id} className={styles.tile}>
               <span className={styles.tileIcon}><t.icon /></span>
-              <h3 className={styles.tileTitle}>{t.title}</h3>
-              <p className={styles.tileDesc}>{t.description}</p>
+              <div className={styles.tileBody}>
+                <h3 className={styles.tileTitle}>{t.title}</h3>
+                <p className={styles.tileDesc}>{t.description}</p>
+              </div>
               <a href={t.href} className={styles.tileCta}>{t.cta}</a>
             </article>
           ))}

@@ -12,15 +12,17 @@ export const helpPanel: Scenario = {
   description: 'Mascot + four contact tiles (Bellen / Terugbellen / Afspraak / Mailen).',
   vagueBrief,
   questions: [
-    { id: 'surfaces', prompt: "Which surfaces show this panel? Only the homepage, every vertical page, or something in between?" },
-    { id: 'routing', prompt: "Where does each tile go? Bellen opens tel:, Terugbellen is a form, Afspraak is a booking app, Mailen is a mailto or contact form — confirm?" },
-    { id: 'phone', prompt: "Confirm the phone number shown on the Bellen tile — peasy.be shows 03 501 22 22 on the main site." },
+    { id: 'surfaces', prompt: "Which surfaces should display this panel?" },
+    { id: 'routing', prompt: "What should each tile route to or trigger when tapped?" },
+    { id: 'phone', prompt: "What phone number should appear on the Bellen tile?" },
+    { id: 'mobile', prompt: "How should the panel adapt at phone width?" },
   ],
   Prototype,
   generateMarkdown(answers) {
     const surfaces = answers.surfaces ?? '[open]';
     const routing = answers.routing ?? '[open]';
     const phone = answers.phone ?? '03 501 22 22';
+    const mobile = answers.mobile ?? '[open]';
     return [
       '# Help · "Hulp nodig?" contact panel',
       '',
@@ -62,6 +64,7 @@ export const helpPanel: Scenario = {
       `- Shown on surfaces: ${surfaces}`,
       `- Tile routing: ${routing}`,
       `- Phone number shown on Bellen tile: ${phone}`,
+      `- Phone-width adaptation: ${mobile}`,
       '',
       '## Visual spec',
       '',

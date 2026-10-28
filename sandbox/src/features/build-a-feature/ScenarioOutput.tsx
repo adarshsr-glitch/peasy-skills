@@ -43,16 +43,8 @@ export function ScenarioOutput({ scenario, answers }: ScenarioOutputProps) {
           <header className={styles.panelHeader}>
             <div>
               <span className={styles.panelEyebrow}>Prototype</span>
-              <h3 className={styles.panelTitle}>Peasy-styled replica</h3>
+              <h3 className={styles.panelTitle}>Live preview</h3>
             </div>
-            <a
-              href={scenario.peasyUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.openLive}
-            >
-              Open live for diff ↗
-            </a>
           </header>
           <div className={styles.previewFrame}>
             <Prototype />

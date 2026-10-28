@@ -17,11 +17,24 @@
   box-shadow: 0 12px 28px -16px rgba(57, 66, 149, 0.14);
 }
 
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
 .heading {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 700;
   color: var(--ink-strong);
+  margin: 0;
+}
+
+.subheading {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-muted);
   margin: 0;
 }
 
@@ -32,6 +45,7 @@
 }
 
 .option {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +66,22 @@
 
 .optionActive {
   border-color: var(--indigo);
-  background: var(--lavender);
+  background: var(--info-bg);
+  box-shadow: inset 0 0 0 1px var(--indigo);
+}
+
+.checkBadge {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--indigo);
+  color: var(--surface-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .optionIcon {
@@ -67,11 +96,11 @@
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .next {
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-3) var(--space-8);
   background: var(--indigo);
   color: var(--surface-base);
   border: none;
