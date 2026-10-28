@@ -12,6 +12,6 @@ Design tokens — colors, typography, spacing, radii, shadows — that every gen
 
 ## Discipline
 
-- Everything here is traceable to a source: Peasy's token file in the frontend, a Figma node id, or the live product.
-- No invented values. If a token is unknown, leave it out and raise a Phase 1 blocker.
-- When the frontend repo lands, the preliminary files above get **replaced**, not patched — their only purpose is to let the pipeline run thinly before full harvest.
+- Every token file carries a `source:` line from the trust tiers in `../sources.md`.
+- No invented values. If a token's value cannot be observed, leave it out — do not guess a reasonable number.
+- When a pasted snippet arrives (ground-truth tier), the lower-tier file is **replaced**, not patched. The pack prefers one strong value to several weak ones.

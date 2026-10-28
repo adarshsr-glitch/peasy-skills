@@ -46,18 +46,21 @@ Scored on:
 
 Threshold: **100% rule coverage** and **zero invented rules**. One fabrication fails the whole run.
 
-## 4 · Component reuse
+## 4 · Pattern fidelity
 
-Does the prototype use Peasy's real components, or does it reinvent?
+Peasy's real components are not shared with KeyValue, so "component reuse" cannot be scored directly. What we can score is whether the prototype's component API shape matches what Peasy's real code appears to use — closely enough that porting is a line-level translation, not a redesign.
 
 Scored on:
 
-- Form controls (text input, dropdown, radio group, checkbox) are the ones Peasy already ships; no bespoke rewrites.
-- Buttons use Peasy's variants and copy pattern.
-- Dropdown behavior follows the Dropdown Guidelines referenced in ANB-1298.
-- Any new component the design skill introduces is logged in the deviations file with a reason.
+- Each imported component in the prototype has a `// Peasy mapping:` trace comment naming a plausible Peasy component. A Peasy developer reading the comment can identify the target without ambiguity.
+- The reconstructed component's props shape is defensible from the source material cited in its `pack/components/<name>.md` file.
+- Behavior-bearing props (locked state, loading state, error state) are present in the reconstruction when the brief requires them.
+- Deviations log honestly names every component resolved to `source: inference`.
+- No prototype imports a component the pack has no file for.
 
-Threshold: **≥ 90**. A rewrite that could have reused an existing component counts against the score even if it looks correct.
+Threshold: **≥ 85**. Ambiguous mappings cost points; invented component surfaces are a hard fail (drops the dimension to 0).
+
+A pasted snippet from Peasy for a given component is a free lift — the component is sourced from `source: snippet` and its mapping confidence goes to maximum. The deviations log should flag which components would benefit most from a snippet request, in priority order.
 
 ## 5 · Repeatability
 

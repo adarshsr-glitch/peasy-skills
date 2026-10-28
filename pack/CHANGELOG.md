@@ -10,6 +10,15 @@ Every change to the pack that affects skill output lands here, newest first. The
 - Change 2
 ```
 
+## 2026-10-28 — Observational pivot
+
+- Confirmed Peasy keeps its frontend code internal; no repo access now or later.
+- Pack is explicitly a reconstruction, not a mirror. Added `sources.md` with the six-tier trust ladder (snippet → figma-dev → figma-png → live-site → brand-kit → inference).
+- Every pack file will carry a `source:` line.
+- `peasy-design` SKILL rewritten: prototypes build in `sandbox/`, import from the pack's reconstructed components, carry `// Peasy mapping:` trace comments.
+- Rubric dimension 4 changed from "Component reuse" to "Pattern fidelity" — portability to Peasy's internal stack is what we score.
+- `pack/components/README.md` reshaped around observational sourcing with priority order for the 9-component ANB-1293 minimum set.
+
 ## 2026-10-28 — Phase 1 preliminary harvest
 
 - `tokens/colors.md` added: Peasy palette (indigo, cyan, pink, lavender, cream, ink) extracted from live site via browser. Marked preliminary — reconcile with frontend repo.

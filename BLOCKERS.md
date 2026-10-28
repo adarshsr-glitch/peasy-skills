@@ -1,26 +1,37 @@
 # Blockers
 
-Things the project cannot advance past without an external action.
+Things the project cannot advance past without an external action. Updated after confirming Peasy keeps its frontend code internal — no repo access, now or later.
 
-## Phase 1 — knowledge pack skeleton
+## Observational sourcing is the mode
 
-**Peasy frontend repo not cloned locally.** Preliminary tokens, terminology, and one pattern have been drafted from on-disk material (brand kit, Jira doc, live-site browser extraction). What still blocks on the frontend repo:
+The pack is reconstructed from what we can observe. There is no "waiting for the frontend repo." See `pack/sources.md` for the trust tiers; each pack file carries a `source:` line pointing at its highest-trust source.
 
-- Phase 0 stack audit (framework, component library name, token file path, build tool).
-- `pack/components/` — API files for every Peasy component the pipeline reuses. The ANB-1293 minimum set is listed in `pack/components/README.md`.
-- Reconciling `pack/tokens/colors.md` and `pack/tokens/typography.md` against the real source. The preliminary values are good enough to run a thin pipeline but not to ship a prototype.
-- Phase 3 prototype build (needs a branch on the real frontend).
+## Current blockers
 
-Unblock by: cloning the repo somewhere on this machine and pointing the session at it.
+### Figma access level
 
-## Phase 1 — knowledge pack skeleton
+**Status:** We have 3 PNG exports of the ANB-1293 screens on disk. Figma dev mode would give us tokens, auto-layout specs, and component node ids directly — far better than visually re-measuring from PNGs.
 
-**Jira read access not confirmed in-session.** The epic doc on disk covers ANB-1293, but future features will come straight from Jira. The pipeline needs either an authenticated Jira path or an export-to-disk ritual.
+**Unblock by:** Peasy adds Adarsh to the Peasy Design Figma file with at least view-plus-dev-mode access. Not critical for Phase 1 — PNGs are enough for a first pass — but important before scored benchmarking in Phase 3.
 
-Not blocking the first benchmark — the ANB-1293 material is already extracted into `eval/benchmarks/anb-1293-electricity.md`.
+### Pasted-snippet channel
 
-## Phase 1 — knowledge pack skeleton
+**Status:** No named Peasy contact confirmed. When the design skill cannot resolve a component's probable API from Figma + live site, it needs a human on the Peasy side to paste the real component's signature. Without this, every ambiguous component becomes an `[open]` indefinitely.
 
-**Figma read access not confirmed in-session.** The three PNG exports in the ANB-1293 folder cover the main views, but the Specifications page's component option values, radio sets, and checkboxes live in Figma, not in Jira text.
+**Unblock by:** A named Peasy engineer (Steve, from `ANB-1293 People`?) agrees to a ~5-minute SLA on "please paste your `Dropdown` props type" requests. One Slack channel or email thread, nothing formal.
 
-Needed when the design skill is built in Phase 2.
+### Figma dev mode token export
+
+**Status:** Related to the Figma access blocker above. If dev mode is granted, `pack/tokens/` can be reconciled against Figma's stored tokens rather than hex-picking from the live site. This closes the "preliminary tokens" caveat in `pack/tokens/colors.md`.
+
+**Unblock by:** Figma dev mode.
+
+### Phase 3 sandbox hosting
+
+**Status:** Prototypes will live in `peasy-skills/sandbox/`. The exact stack (Vite + React is the current default guess) depends on what the live site + any pasted snippets reveal about Peasy's real stack.
+
+**Unblock by:** Running the Observable-surface audit in Phase 0 — browser-inspect peasy.be, note the framework signatures, lock the sandbox stack.
+
+## No longer blocking
+
+- ~~Peasy frontend repo not cloned locally~~ — resolved by committing to observational sourcing. The pack ships as a reconstruction; Peasy devs reconcile when porting.
