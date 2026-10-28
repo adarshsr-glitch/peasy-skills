@@ -1,0 +1,806 @@
+<title>Peasy Claude Skills roadmap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* Layout concept: landscape roadmap poster locked to Peasy's light palette;
+   hero + 7 stage columns with mini-mockups + signals row + end-to-end flow strip. */
+:root {
+  --bg:          #FBF9F4;
+  --surface:     #FFFFFF;
+  --surface-2:   #F3F2EE;
+  --surface-3:   #FAF8F1;
+  --ink:         #17192B;
+  --ink-soft:    #39405C;
+  --muted:       #747580;
+  --line:        #E6E5DE;
+  --line-strong: #D6D5CB;
+  --indigo:      #394295;
+  --indigo-ink:  #262C6B;
+  --indigo-soft: #D7D9EA;
+  --indigo-tint: #ECEDF6;
+  --cyan:        #66C6E2;
+  --cyan-tint:   #E8F5FA;
+  --cyan-ink:    #2A6D80;
+  --pink:        #F2A4C7;
+  --pink-tint:   #FBE8F0;
+  --pink-ink:    #8A3561;
+  --mint:        #B9DDC2;
+  --mint-tint:   #E7F3EA;
+  --sand:        #F4EBD1;
+  --amber:       #E9A24A;
+  --ok:          #2E8560;
+  --font-display: 'Grold','Manrope',-apple-system,system-ui,sans-serif;
+  --font-body:    'Grold','Manrope',-apple-system,system-ui,sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 36px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.page { max-width: 1500px; margin: 0 auto; }
+
+h1,h2,h3,h4,h5 { margin: 0; font-family: var(--font-display); color: var(--ink); letter-spacing: -0.015em; }
+
+/* =============== HERO =============== */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0,1.3fr) minmax(260px, 360px);
+  gap: 22px; align-items: start;
+  margin-bottom: 18px;
+}
+.hero-main h1 {
+  font-size: clamp(28px, 3.4vw, 42px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+  margin: 8px 0 8px;
+}
+.hero-main h1 em { font-style: normal; color: var(--indigo); }
+.peasy-mark {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  font-weight: 700; color: var(--indigo);
+}
+.peasy-mark .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pink); box-shadow: 14px 0 0 var(--cyan), 28px 0 0 var(--indigo); margin-right: 32px; }
+.hero-main .sub { color: var(--muted); font-size: 14.5px; max-width: 62ch; margin: 0; }
+
+.northstar {
+  background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-ink) 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.northstar::after {
+  content: ""; position: absolute; right: -40px; top: -40px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, var(--pink) 0%, transparent 65%);
+  opacity: 0.6; pointer-events: none;
+}
+.northstar::before {
+  content: ""; position: absolute; left: -30px; bottom: -40px;
+  width: 130px; height: 130px;
+  background: radial-gradient(circle, var(--cyan) 0%, transparent 65%);
+  opacity: 0.5; pointer-events: none;
+}
+.northstar > * { position: relative; z-index: 1; }
+.northstar .ns-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.northstar .ns-head .target {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--cyan); display: inline-flex; align-items: center; justify-content: center;
+}
+.northstar .ns-head .target::after {
+  content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--pink);
+}
+.northstar h3 { color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.northstar p { font-size: 13.5px; color: rgba(255,255,255,0.92); margin: 0; line-height: 1.5; }
+
+/* =============== STAGES GRID =============== */
+.stages {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.stages::before {
+  content: ""; position: absolute;
+  left: 60px; right: 60px; top: 54px;
+  height: 2px; background:
+    repeating-linear-gradient(90deg, var(--indigo-soft) 0 10px, transparent 10px 18px);
+  z-index: 0;
+}
+.stage {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 12px;
+  display: flex; flex-direction: column; gap: 10px;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.stage.accent-indigo { background: linear-gradient(180deg, var(--indigo-tint) 0%, var(--surface) 55%); border-color: var(--indigo-soft); }
+.stage.accent-cyan   { background: linear-gradient(180deg, var(--cyan-tint)   0%, var(--surface) 55%); border-color: #BEE3EE; }
+.stage.accent-pink   { background: linear-gradient(180deg, var(--pink-tint)   0%, var(--surface) 55%); border-color: #F4D0E0; }
+
+.stage-head { display: flex; flex-direction: column; gap: 6px; }
+.stage-topline { display: flex; align-items: center; gap: 10px; }
+.num {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  color: #fff; background: var(--indigo); flex-shrink: 0;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.06);
+}
+.accent-cyan .num { background: var(--cyan); color: var(--indigo-ink); }
+.accent-pink .num { background: var(--pink); color: var(--indigo-ink); }
+
+.phase-chip {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+  padding: 3px 8px; border-radius: 100px;
+  background: rgba(57,66,149,0.08); color: var(--indigo);
+  white-space: nowrap;
+}
+.accent-cyan .phase-chip { background: rgba(102,198,226,0.22); color: var(--cyan-ink); }
+.accent-pink .phase-chip { background: rgba(242,164,199,0.25); color: var(--pink-ink); }
+
+.stage-head h3 { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.stage-head .lede { font-size: 12px; color: var(--muted); line-height: 1.4; margin: 0; }
+
+/* ----- Mini-mockup container ----- */
+.mock {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px;
+  display: flex; flex-direction: column; gap: 6px;
+  min-height: 150px;
+  flex: 1;
+}
+.mock .mock-label {
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  color: var(--muted); margin-bottom: 2px;
+}
+
+/* -- stage 1 -- */
+.chips { display: flex; flex-direction: column; gap: 5px; }
+.chips .q {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 100px; padding: 4px 10px;
+  font-size: 11px; color: var(--ink-soft); font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.chips .q::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--pink); flex-shrink: 0; }
+.chips .q:nth-child(2)::before { background: var(--cyan); }
+.chips .q:nth-child(3)::before { background: var(--indigo); }
+.chips .q:nth-child(4)::before { background: var(--amber); }
+
+/* -- stage 2 -- */
+.filetree {
+  font-family: var(--font-mono); font-size: 10.5px;
+  color: var(--ink-soft);
+  background: var(--surface-3);
+  padding: 7px 9px; border-radius: 6px;
+  line-height: 1.55;
+}
+.filetree .f-dir { color: var(--indigo); font-weight: 600; }
+.filetree .f-file { color: var(--ink-soft); }
+.filetree .indent1 { padding-left: 8px; }
+.filetree .indent2 { padding-left: 16px; }
+.swatches { display: flex; gap: 4px; align-items: center; }
+.sw { width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--line); }
+.sw.i { background: var(--indigo); }
+.sw.c { background: var(--cyan); }
+.sw.p { background: var(--pink); }
+.sw.n { background: var(--ink); }
+.sw.s { background: var(--surface-2); }
+.swatch-note { font-size: 9.5px; color: var(--muted); margin-left: 4px; letter-spacing: 0.04em; }
+.btn-ex {
+  background: var(--indigo); color: #fff; font-size: 10.5px; font-weight: 600;
+  padding: 5px 10px; border-radius: 6px; align-self: flex-start;
+}
+
+/* -- stage 3 -- */
+.tickets { display: flex; flex-direction: column; gap: 3px; }
+.ticket { display: grid; grid-template-columns: 14px 1fr; gap: 6px; align-items: center; font-size: 10.5px; }
+.ticket .tk { font-family: var(--font-mono); color: var(--indigo); font-weight: 600; font-size: 10px; }
+.ticket .tx { color: var(--ink-soft); }
+.ticket .ch {
+  width: 11px; height: 11px; border-radius: 3px; background: var(--mint-tint);
+  color: var(--ok); display: inline-flex; align-items: center; justify-content: center;
+}
+.ticket .ch::after { content: "✓"; font-size: 8px; font-weight: 700; line-height: 1; }
+.lang-chips { display: flex; gap: 4px; align-items: center; margin-top: 2px; }
+.lang-chips .lc { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 100px; background: var(--pink-tint); color: var(--pink-ink); }
+.lang-chips .lc.fr { background: var(--cyan-tint); color: var(--cyan-ink); }
+.lang-chips .ltx { font-size: 9.5px; color: var(--muted); }
+
+/* -- stage 4 -- */
+.pack { background: var(--surface-3); border: 1px dashed var(--indigo-soft); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.pack .pack-head { display: flex; align-items: center; justify-content: space-between; }
+.pack .pack-name { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--indigo); }
+.pack .pack-ver { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 100px; background: var(--indigo); color: #fff; letter-spacing: 0.06em; }
+.pack ul { list-style: none; padding: 0; margin: 2px 0 0; display: flex; flex-direction: column; gap: 2px; }
+.pack li { font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
+.pack li::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--indigo); flex-shrink: 0; }
+.cite { font-size: 10px; color: var(--muted); font-style: italic; }
+
+/* -- stage 5 -- */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.scr { background: var(--surface-3); border: 1px solid var(--line); border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 3px; min-height: 78px; }
+.scr .scr-label { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+.scr .scr-logo { font-family: var(--font-display); font-weight: 700; font-size: 10px; color: var(--indigo); letter-spacing: 0.02em; }
+.scr .scr-tabs { display: flex; gap: 3px; margin-top: 2px; }
+.scr .scr-tabs span { background: var(--surface-2); font-size: 7px; padding: 2px 4px; border-radius: 3px; color: var(--muted); }
+.scr .scr-tabs span.on { background: var(--indigo); color: #fff; }
+.scr .scr-field { background: var(--surface); border: 1px solid var(--line); height: 9px; border-radius: 3px; margin-top: 3px; }
+.scr .scr-cta { background: var(--indigo); height: 7px; width: 50%; border-radius: 3px; margin-top: 2px; }
+.match-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 10px; color: var(--ok); font-weight: 600; }
+.match-row .bar { flex: 1; height: 6px; background: var(--surface-2); border-radius: 100px; overflow: hidden; position: relative; }
+.match-row .bar::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 86%; background: linear-gradient(90deg, var(--cyan), var(--indigo)); border-radius: 100px; }
+
+/* -- stage 6 -- */
+.skills { display: flex; flex-direction: column; gap: 6px; }
+.skl { background: var(--surface-3); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.skl .skl-head { display: flex; align-items: center; gap: 6px; }
+.skl .skl-dot { width: 14px; height: 14px; border-radius: 4px; background: var(--indigo); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; font-family: var(--font-mono); }
+.skl.req .skl-dot { background: var(--pink); color: var(--pink-ink); }
+.skl .skl-name { font-size: 11px; font-weight: 700; color: var(--ink); }
+.skl .skl-arrow { font-size: 10.5px; color: var(--muted); font-family: var(--font-mono); }
+.skl .skl-arrow b { color: var(--indigo); font-weight: 600; }
+.skl.req .skl-arrow b { color: var(--pink-ink); }
+
+/* -- stage 7 -- */
+.form-mock { background: var(--surface-3); border: 1px solid var(--line); border-radius: 6px; padding: 7px; display: flex; flex-direction: column; gap: 3px; }
+.form-mock .fm-head { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 600; color: var(--ink); }
+.form-mock .fm-head .ticket-tag { font-family: var(--font-mono); font-size: 9px; color: var(--pink-ink); background: var(--pink-tint); padding: 1px 6px; border-radius: 100px; }
+.form-mock .row { display: flex; align-items: center; gap: 6px; font-size: 9.5px; }
+.form-mock .row .k { color: var(--muted); min-width: 68px; }
+.form-mock .row .v { color: var(--ink-soft); font-family: var(--font-mono); font-size: 9px; }
+.form-mock .row .v.empty { color: var(--muted); font-style: italic; }
+.form-mock .row .v.locked { color: var(--indigo); font-weight: 600; }
+.form-mock .row .v.no { color: var(--ink); font-weight: 600; }
+.checks { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
+.checks .check { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--ink-soft); }
+.checks .check::before { content: "✓"; width: 11px; height: 11px; border-radius: 3px; background: var(--mint-tint); color: var(--ok); font-size: 8px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+
+/* ----- UNDERSTAND footer ----- */
+.uc { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 2px; }
+.uc h4 { font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+.uc p { font-size: 12px; color: var(--ink); font-weight: 600; line-height: 1.35; margin: 0; }
+
+/* =============== SIGNALS STRIP =============== */
+.signals { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; }
+.signals-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.signals-head h3 { font-size: 13.5px; font-weight: 700; }
+.signals-head small { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+.sig-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+.sig-col { display: flex; flex-direction: column; gap: 5px; }
+.sig-col .sc-head { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--ink); }
+.sig-col .sc-head .sc-dot { width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; background: var(--indigo); color: #fff; font-size: 10px; font-weight: 700; }
+.sig-col:nth-child(2) .sc-dot { background: var(--cyan); color: var(--indigo-ink); }
+.sig-col:nth-child(3) .sc-dot { background: var(--pink); color: var(--indigo-ink); }
+.sig-col:nth-child(5) .sc-dot { background: var(--cyan); color: var(--indigo-ink); }
+.sig-col:nth-child(6) .sc-dot { background: var(--pink); color: var(--indigo-ink); }
+.sig-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.sig-col li { font-size: 10.5px; color: var(--ink-soft); line-height: 1.35; display: flex; align-items: flex-start; gap: 5px; }
+.sig-col li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--indigo); margin-top: 6px; flex-shrink: 0; }
+
+/* =============== FLOW STRIP =============== */
+.flow { background: linear-gradient(180deg, var(--surface) 0%, var(--surface-3) 100%); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.flow h3 { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-weight: 700; }
+.flow-strip { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.flow-step { display: flex; align-items: center; gap: 8px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px 7px 8px; }
+.flow-step .fs-icon { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--indigo-tint); color: var(--indigo); flex-shrink: 0; }
+.flow-step .fs-icon svg { width: 13px; height: 13px; }
+.flow-step .fs-text { font-size: 12px; font-weight: 600; color: var(--ink); }
+.flow-step .fs-sub { font-size: 9.5px; color: var(--muted); font-weight: 500; }
+.flow-step .fs-stack { display: flex; flex-direction: column; min-width: 0; }
+.flow-step.cyan .fs-icon { background: var(--cyan-tint); color: var(--cyan-ink); }
+.flow-step.pink .fs-icon { background: var(--pink-tint); color: var(--pink-ink); }
+.flow-arr { color: var(--indigo-soft); font-size: 18px; line-height: 1; font-weight: 500; }
+
+/* =============== RESPONSIVE (screen) =============== */
+@media (max-width: 1300px) {
+  .stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .stages::before { display: none; }
+  .sig-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .sig-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .flow-strip { flex-direction: column; align-items: stretch; }
+  .flow-arr { transform: rotate(90deg); text-align: center; }
+}
+@media (max-width: 540px) {
+  .stages { grid-template-columns: 1fr; }
+  .sig-grid { grid-template-columns: 1fr; }
+}
+
+/* =============== PRINT (single landscape page) =============== */
+@media print {
+  @page { size: 420mm 297mm; margin: 6mm; }
+  html, body { background: var(--bg) !important; }
+  body {
+    width: 408mm;
+    max-height: 285mm;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page { max-width: none; }
+  .stages { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; gap: 7px; margin-bottom: 10px; }
+  .sig-grid { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; gap: 10px; }
+  .stages::before { display: block !important; left: 54px; right: 54px; top: 46px; }
+
+  .hero { margin-bottom: 10px; grid-template-columns: minmax(0,1.5fr) minmax(260px, 330px); gap: 18px; }
+  .hero-main h1 { font-size: 30px; margin: 6px 0 4px; }
+  .hero-main .sub { font-size: 12.5px; }
+  .peasy-mark { font-size: 10px; }
+  .northstar { padding: 12px 16px; border-radius: 14px; }
+  .northstar h3 { font-size: 11px; }
+  .northstar p { font-size: 12px; line-height: 1.4; }
+  .northstar .ns-head { margin-bottom: 4px; }
+
+  .stage { padding: 9px 8px; gap: 7px; border-radius: 10px; page-break-inside: avoid; break-inside: avoid; }
+  .stage-head { gap: 4px; }
+  .stage-topline { gap: 7px; }
+  .num { width: 28px; height: 28px; font-size: 13px; }
+  .phase-chip { font-size: 8.5px; padding: 2px 7px; }
+  .stage-head h3 { font-size: 13px; }
+  .stage-head .lede { font-size: 11px; }
+  .mock { min-height: 130px; padding: 7px; gap: 4px; border-radius: 8px; }
+  .mock .mock-label { font-size: 8.5px; }
+  .chips .q { font-size: 10px; padding: 3px 8px; }
+  .filetree { font-size: 10px; padding: 6px 8px; line-height: 1.45; }
+  .sw { width: 13px; height: 13px; }
+  .btn-ex { font-size: 10px; padding: 4px 9px; }
+  .ticket { font-size: 10px; }
+  .ticket .tk { font-size: 9.5px; }
+  .pack { padding: 7px 8px; }
+  .pack li { font-size: 9.5px; }
+  .scr { min-height: 70px; padding: 5px; }
+  .skl { padding: 6px 8px; }
+  .skl .skl-name { font-size: 10.5px; }
+  .skl .skl-arrow { font-size: 10px; }
+  .form-mock { padding: 6px; }
+  .form-mock .row { font-size: 9.5px; }
+  .checks .check { font-size: 9.5px; }
+  .uc { padding-top: 6px; }
+  .uc h4 { font-size: 8.5px; }
+  .uc p { font-size: 11px; }
+
+  .signals { padding: 10px 14px; margin-bottom: 10px; page-break-inside: avoid; break-inside: avoid; border-radius: 10px; }
+  .signals-head { margin-bottom: 8px; }
+  .signals-head h3 { font-size: 12.5px; }
+  .signals-head small { font-size: 10px; }
+  .sig-col .sc-head { font-size: 10.5px; }
+  .sig-col .sc-head .sc-dot { width: 14px; height: 14px; font-size: 9px; }
+  .sig-col li { font-size: 10px; line-height: 1.3; }
+  .sig-col li::before { margin-top: 5px; }
+
+  .flow { padding: 9px 12px; border-radius: 10px; page-break-inside: avoid; break-inside: avoid; }
+  .flow h3 { font-size: 9.5px; margin-bottom: 6px; }
+  .flow-strip { flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 3px; justify-content: space-between; }
+  .flow-step { padding: 4px 10px 4px 5px; gap: 6px; flex: 0 1 auto; min-width: 0; }
+  .flow-step .fs-icon { width: 20px; height: 20px; }
+  .flow-step .fs-icon svg { width: 11px; height: 11px; }
+  .flow-step .fs-text { font-size: 10px; white-space: nowrap; }
+  .flow-step .fs-sub { display: none; }
+  .flow-arr { transform: none; font-size: 13px; flex: 0 0 auto; }
+}
+</style>
+
+<div class="page">
+
+  <!-- ============== HERO ============== -->
+  <header class="hero">
+    <div class="hero-main">
+      <div class="peasy-mark"><span class="dot"></span>Peasy · Claude Skills</div>
+      <h1>From an idea to a <em>review-ready</em> product output.</h1>
+      <p class="sub">A shared knowledge pack and two Claude skills — one that drafts a Peasy-consistent prototype, one that drafts a Jira-ready spec. Grounded in Peasy's own code, design system and product rules.</p>
+    </div>
+    <aside class="northstar">
+      <div class="ns-head">
+        <span class="target" aria-hidden="true"></span>
+        <h3>North star</h3>
+      </div>
+      <p>A Peasy idea becomes a prototype that reads as Peasy and a spec grounded in actual product decisions. Both marked as drafts. Both traceable to source.</p>
+    </aside>
+  </header>
+
+  <!-- ============== STAGES GRID ============== -->
+  <section class="stages" aria-label="Seven stages">
+
+    <!-- STAGE 1 -->
+    <article class="stage accent-indigo">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">1</span>
+          <span class="phase-chip">Discover</span>
+        </div>
+        <h3>Frame the problem</h3>
+        <p class="lede">Pin down what the feature actually asks for before any code moves.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Opening questions</span>
+        <div class="chips">
+          <div class="q">Who feels the gap?</div>
+          <div class="q">What outcome counts as success?</div>
+          <div class="q">What already exists we can reuse?</div>
+          <div class="q">What would "good" look like?</div>
+        </div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>What the brief actually asks for, in Peasy's own terms.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 2 -->
+    <article class="stage accent-cyan">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">2</span>
+          <span class="phase-chip">Discover</span>
+        </div>
+        <h3>Read what Peasy is</h3>
+        <p class="lede">Inventory the frontend, the tokens, the patterns that already live.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">peasy-frontend</span>
+        <div class="filetree">
+          <div class="f-dir">src/</div>
+          <div class="indent1 f-dir">components/</div>
+          <div class="indent2 f-file">Button.tsx</div>
+          <div class="indent2 f-file">Input.tsx</div>
+          <div class="indent2 f-file">Select.tsx</div>
+          <div class="indent1 f-dir">tokens/</div>
+          <div class="indent2 f-file">theme.ts</div>
+        </div>
+        <div class="swatches">
+          <div class="sw i"></div><div class="sw c"></div><div class="sw p"></div>
+          <div class="sw n"></div><div class="sw s"></div>
+          <span class="swatch-note">tokens · 8 · Grold</span>
+        </div>
+        <div class="btn-ex">Nieuw product</div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>The system, components and conventions already in the product.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 3 -->
+    <article class="stage accent-pink">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">3</span>
+          <span class="phase-chip">Discover</span>
+        </div>
+        <h3>Capture the rules</h3>
+        <p class="lede">Resolve logic, states and terminology into one source of truth.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Electricity · epic rules</span>
+        <div class="tickets">
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1303</span> <span class="tx">Create product</span></span></div>
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1304</span> <span class="tx">Edit specification</span></span></div>
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1305</span> <span class="tx">Save &amp; mandatory</span></span></div>
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1307</span> <span class="tx">No-supplier state</span></span></div>
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1347</span> <span class="tx">Duplicate</span></span></div>
+          <div class="ticket"><span class="ch"></span><span><span class="tk">ANB-1358</span> <span class="tx">Name uniqueness</span></span></div>
+        </div>
+        <div class="lang-chips">
+          <span class="lc">NL</span><span class="lc fr">FR</span>
+          <span class="ltx">terminology sheet</span>
+        </div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>How logic, states and terms behave across Figma, Jira and the product itself.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 4 -->
+    <article class="stage accent-indigo">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">4</span>
+          <span class="phase-chip">Package</span>
+        </div>
+        <h3>Shape the knowledge pack</h3>
+        <p class="lede">Package context into something both skills draw from every run.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Shared pack</span>
+        <div class="pack">
+          <div class="pack-head">
+            <span class="pack-name">peasy-pack</span>
+            <span class="pack-ver">v0.1</span>
+          </div>
+          <ul>
+            <li>tokens/</li>
+            <li>components/</li>
+            <li>rules/</li>
+            <li>terminology/</li>
+            <li>examples/</li>
+            <li>do-and-dont/</li>
+          </ul>
+        </div>
+        <div class="cite">every entry cites its source</div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>What context the skills need to stay in Peasy's character.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 5 -->
+    <article class="stage accent-cyan">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">5</span>
+          <span class="phase-chip">Prove</span>
+        </div>
+        <h3>Prove it on a real screen</h3>
+        <p class="lede">Benchmark: can the pack alone rebuild the Electricity Product screen?</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Side-by-side · Electricity listing</span>
+        <div class="compare">
+          <div class="scr">
+            <span class="scr-label">LIVE</span>
+            <span class="scr-logo">Peasy</span>
+            <div class="scr-tabs"><span class="on">Electricity</span><span>Gas</span></div>
+            <div class="scr-field"></div>
+            <div class="scr-field"></div>
+            <div class="scr-cta"></div>
+          </div>
+          <div class="scr">
+            <span class="scr-label">PACK OUTPUT</span>
+            <span class="scr-logo">Peasy</span>
+            <div class="scr-tabs"><span class="on">Electricity</span><span>Gas</span></div>
+            <div class="scr-field"></div>
+            <div class="scr-field"></div>
+            <div class="scr-cta"></div>
+          </div>
+        </div>
+        <div class="match-row">
+          <div class="bar"></div><span>86%</span>
+        </div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>Whether the pack alone can reproduce a live Peasy screen.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 6 -->
+    <article class="stage accent-indigo">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">6</span>
+          <span class="phase-chip">Build</span>
+        </div>
+        <h3>Build the skills</h3>
+        <p class="lede">Two Peasy skills: one drafts the prototype, one drafts the spec.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Two skills, one pack</span>
+        <div class="skills">
+          <div class="skl">
+            <div class="skl-head">
+              <span class="skl-dot">D</span>
+              <span class="skl-name">Peasy Design</span>
+            </div>
+            <div class="skl-arrow">brief → <b>&lt;Prototype /&gt;</b></div>
+          </div>
+          <div class="skl req">
+            <div class="skl-head">
+              <span class="skl-dot">R</span>
+              <span class="skl-name">Peasy Requirements</span>
+            </div>
+            <div class="skl-arrow">brief → <b>ANB-13XX</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>Where shared context ends and skill-specific judgement begins.</p>
+      </div>
+    </article>
+
+    <!-- STAGE 7 -->
+    <article class="stage accent-pink">
+      <div class="stage-head">
+        <div class="stage-topline">
+          <span class="num">7</span>
+          <span class="phase-chip">Stretch</span>
+        </div>
+        <h3>Stretch to a new workflow</h3>
+        <p class="lede">Different shape, same bar: product duplication from scratch.</p>
+      </div>
+      <div class="mock">
+        <span class="mock-label">Duplicate product · test</span>
+        <div class="form-mock">
+          <div class="fm-head">
+            <span>Duplicate</span>
+            <span class="ticket-tag">ANB-1347</span>
+          </div>
+          <div class="row"><span class="k">Productnaam NL</span><span class="v empty">— empty —</span></div>
+          <div class="row"><span class="k">Productnaam FR</span><span class="v empty">— empty —</span></div>
+          <div class="row"><span class="k">Leverancier</span><span class="v locked">ENGIE 🔒</span></div>
+          <div class="row"><span class="k">In vergelijking</span><span class="v no">Nee</span></div>
+        </div>
+        <div class="checks">
+          <div class="check">Names start empty</div>
+          <div class="check">Supplier preserved</div>
+          <div class="check">Comparison default Nee</div>
+          <div class="check">Case-insensitive name unique</div>
+        </div>
+      </div>
+      <div class="uc">
+        <h4>Understand</h4>
+        <p>Whether the approach holds beyond one screen and one shape.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============== SIGNALS STRIP ============== -->
+  <section class="signals">
+    <div class="signals-head">
+      <h3>Signals each stage is actually done</h3>
+      <small>Not deadlines — things that are either true or they aren't.</small>
+    </div>
+    <div class="sig-grid">
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">1</span>Frame</div>
+        <ul>
+          <li>Problem stated in one paragraph</li>
+          <li>Scope agreed in writing</li>
+          <li>Open questions logged</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">2</span>Read</div>
+        <ul>
+          <li>Component catalogue in writing</li>
+          <li>Token file located</li>
+          <li>Gaps listed, not hidden</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">3</span>Capture</div>
+        <ul>
+          <li>Every rule cites its ANB ticket</li>
+          <li>NL &amp; FR terminology aligned</li>
+          <li>Conflicts flagged for review</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">4</span>Shape</div>
+        <ul>
+          <li>peasy-pack tagged v0.1</li>
+          <li>Zero orphan entries</li>
+          <li>Reviewed before use</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">5</span>Prove</div>
+        <ul>
+          <li>Fidelity score recorded</li>
+          <li>Deviations enumerated</li>
+          <li>Pack gaps fed back</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">6</span>Build</div>
+        <ul>
+          <li>Both skills reach the baseline</li>
+          <li>Uncertainty surfaced in output</li>
+          <li>Every claim traceable</li>
+        </ul>
+      </div>
+      <div class="sig-col">
+        <div class="sc-head"><span class="sc-dot">7</span>Stretch</div>
+        <ul>
+          <li>ANB-1347 duplication passes</li>
+          <li>Rule exceptions respected</li>
+          <li>Maintenance owner named</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== END-TO-END FLOW ============== -->
+  <section class="flow">
+    <h3>End to end — in one sitting</h3>
+    <div class="flow-strip">
+      <div class="flow-step">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3"/><path d="M8.5 5.5l2 2"/><path d="M15.5 5.5l-2 2"/><path d="M9 18h6"/><path d="M10 22h4"/><circle cx="12" cy="12" r="5"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">A new idea</span>
+          <span class="fs-sub">feature brief</span>
+        </div>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step cyan">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 11v6c0 1.7 4 3 9 3s9-1.3 9-3v-6"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">Peasy knowledge</span>
+          <span class="fs-sub">pack · tokens · rules</span>
+        </div>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h5M8 16h8"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">Claude Skills</span>
+          <span class="fs-sub">design + requirements</span>
+        </div>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step pink">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="16" rx="2"/><rect x="14" y="8" width="8" height="12" rx="2"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">Prototype + spec</span>
+          <span class="fs-sub">drafts, uncertainty marked</span>
+        </div>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step cyan">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 12l2 2 4-4"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">Human review</span>
+          <span class="fs-sub">designer · dev · PM</span>
+        </div>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step">
+        <span class="fs-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/><path d="M18 15l3 3-3 3"/></svg>
+        </span>
+        <div class="fs-stack">
+          <span class="fs-text">Peasy adopts</span>
+          <span class="fs-sub">ships in the real flow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
