@@ -17,20 +17,26 @@ Prototypes built by `peasy-design` import from these reconstructed files via a p
 
 ## Status
 
-**Currently empty.** Next step: first harvest from the three Figma PNGs on disk (`../../../ANB-1293 Energy - New Engine Admin- Electricity Product Specifications/figma/`) plus live-site inspection of peasy.be in the browser pane.
+All 9 components for the ANB-1293 minimum set have landed. Each file carries a `source:` line and a `peasy_mapping:` hypothesis in its frontmatter.
 
-Minimum set the ANB-1293 benchmark needs:
-
-| Component | Primary source | Priority |
+| File | Source | Notes |
 | --- | --- | --- |
-| `Dropdown.md` | Figma PNG + live-site inspection (supplier picker on peasy.be comparison flows is analogous) | High — supplier + product selectors |
-| `TextInput.md` | Figma PNG | High — 15 text fields |
-| `TextInputNumeric.md` | Figma PNG | High — `Contractduur`, `Indexeringsperiode` |
-| `RadioGroup.md` | Figma PNG — must include locked state per `ANB-1306 AC5` | High |
-| `CheckboxGroup.md` | Figma PNG | Medium — `Betaalmethoden` |
-| `Button.md` | Figma PNG + live-site (primary / ghost variants are visible on peasy.be) | High |
-| `Badge.md` | Figma PNG — green / grey Status pill | High |
-| `StickyActionBar.md` | Figma PNG — top + bottom Save, `ANB-1305 AC1` | Medium |
-| `PageHeader.md` | Figma PNG — section title under supplier selector | Medium |
+| `Button.md` | `figma-png + live-site` | Two button families: admin rounded + marketing pill |
+| `Dropdown.md` | `figma-png` | Open-state treatment inferred — priority snippet request |
+| `Badge.md` | `figma-png` | `Niet actief` (grey) not visually observed, spec'd by `ANB-1306 AC2` |
+| `TextInput.md` | `figma-png` | Focused / error states inferred |
+| `TextInputNumeric.md` | `figma-png` | May be a prop on `TextInput` rather than a separate component — snippet request |
+| `RadioGroup.md` | `figma-png` | Locked state (`ANB-1306 AC5`) inferred — important for ANB-1293 |
+| `CheckboxGroup.md` | `figma-png` | Required-field semantics ("at least one") inferred |
+| `StickyActionBar.md` | `figma-png + inference` | May not be a component at all — could be a layout pattern |
+| `PageHeader.md` | `figma-png` | Three flow variants (edit / create / duplicate); whether it's one component or three is open |
 
-High-priority first. A snippet request to Peasy's team (via the channel named in `../../BLOCKERS.md`) is warranted for anything that stays `source: inference` after Figma + live-site harvest.
+Priority snippet-request list, highest-value first:
+
+1. **Button** state treatments (hover, focus, active, disabled, loading) — five inferences, all production essentials.
+2. **Dropdown** open-state visual (including status-colored items).
+3. **RadioGroup** `locked` prop shape — needed for `Toon in vergelijking` behavior.
+4. **StickyActionBar** vs. **PageHeader** boundary — one snippet collapses or confirms both.
+5. **TextInputNumeric** — one prop on TextInput or a separate component?
+
+Everything else (CheckboxGroup indeterminate, Badge dot-as-prop, PageHeader variants) can wait until a feature actually touches them.

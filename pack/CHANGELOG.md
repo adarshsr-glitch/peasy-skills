@@ -10,6 +10,21 @@ Every change to the pack that affects skill output lands here, newest first. The
 - Change 2
 ```
 
+## 2026-10-28 — Remaining 6 components (ANB-1293 minimum set complete)
+
+Harvest wraps the 9-component minimum set for ANB-1293:
+
+- `components/TextInput.md`: admin text field; shares shell with Dropdown. Helper text slot observed.
+- `components/TextInputNumeric.md`: visually identical to TextInput. Honest about likely being a prop on TextInput, not a separate component.
+- `components/RadioGroup.md`: horizontal radios with group label above. Locked state inferred — critical for `Toon in vergelijking` per ANB-1306 AC5.
+- `components/CheckboxGroup.md`: structurally parallel to RadioGroup; square boxes with `--indigo` fill when checked.
+- `components/StickyActionBar.md`: top + bottom Save per ANB-1305 AC1. Flagged openly: may not be a component at all, could be a layout pattern.
+- `components/PageHeader.md`: edit / create / duplicate flow variants. Title + Badge + metadata + Save slot structure.
+
+All six point at the token names defined in `tokens/colors.md`, `tokens/spacing.md`, `tokens/radii.md` — no more `**inference**` on tokens that already exist in the pack.
+
+Updated `components/README.md` with the full 9-row status table and a priority snippet-request list (5 top asks, ranked by downstream value).
+
 ## 2026-10-28 — Token layer growth: radii, spacing, semantic colors
 
 - `tokens/radii.md` added: four-step scale (sm 4 / md 8 / lg 16 / pill 999) with per-component mapping.
