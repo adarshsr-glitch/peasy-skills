@@ -1,0 +1,62 @@
+/*
+ * Peasy design tokens — exported from pack/tokens/ as CSS custom properties.
+ *
+ * Source: observational reconstruction. See peasy-skills/pack/tokens/*.md
+ * for the per-token source line and open questions. These values are the
+ * sandbox's single source of truth; prototypes must not use literals.
+ *
+ * Peasy mapping: when porting to Peasy's codebase, swap this file for
+ * their own token file (CSS vars / JS object / Tailwind config — unknown).
+ * The token NAMES should port cleanly; VALUES will shift to Peasy's real.
+ */
+
+:root {
+  /* ---------- Palette ---------- */
+  --indigo: #394295;
+  --cyan: #66c6e2;
+  --pink: #f2a4c7;
+  --lavender: #d7d9ea;
+  --cream: #fbf9f4;
+  --ink: #000000;
+
+  /* ---------- Semantic — status ---------- */
+  --success-fg: #1f8a4a;
+  --success-bg: #daf4e6;
+  --neutral-fg: #6b7280;
+  --neutral-bg: #f0f1f4;
+  --info-fg: #0e7490;
+  --info-bg: #d8f0f3;
+  --danger-fg: #b91c1c;
+  --danger-bg: #fee2e2;
+
+  /* ---------- Semantic — structural ---------- */
+  --surface-base: #ffffff;
+  --surface-page: #fbf9f4;
+  --surface-raised: #f7f7f2;
+  --border-subtle: #e5e7eb;
+  --border-strong: #394295;
+  --ink-strong: #000000;
+  --ink-muted: #6b7280;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ---------- Radii ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* ---------- Typography ---------- */
+  --font-display: 'Grold', 'Manrope', system-ui, sans-serif;
+  --font-body: 'gfflt', 'Manrope', system-ui, sans-serif;
+}

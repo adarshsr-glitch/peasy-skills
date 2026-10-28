@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.groupLabel {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 14px;
+  color: var(--ink-strong);
+  cursor: pointer;
+}
+
+.option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--surface-base);
+  position: relative;
+  flex-shrink: 0;
+  cursor: inherit;
+}
+
+.checkbox:checked {
+  border-color: var(--indigo);
+  background: var(--indigo);
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid var(--surface-base);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox:focus-visible {
+  outline: 2px solid var(--indigo);
+  outline-offset: 2px;
+}

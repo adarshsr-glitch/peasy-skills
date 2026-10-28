@@ -1,0 +1,15 @@
+.bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.top {
+  margin-bottom: var(--space-4);
+}
+
+.bottom {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+}
