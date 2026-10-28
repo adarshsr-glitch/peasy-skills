@@ -4,11 +4,11 @@ Design tokens — colors, typography, spacing, radii, shadows — that every gen
 
 | File | Status |
 | --- | --- |
-| `colors.md` | Preliminary (brand-kit + browser extraction). Reconcile with frontend. |
-| `typography.md` | Preliminary (families only). Reconcile with frontend. |
-| `spacing.md` | Not written. Needs frontend. |
-| `radii.md` | Not written. Needs frontend. |
-| `shadows.md` | Not written. Needs frontend. |
+| `colors.md` | Full — three tiers (palette, semantic status, semantic structural). Several values flagged `**inferred**` pending Figma dev mode. |
+| `typography.md` | Preliminary (families only). Scale and weights deferred to Figma dev mode. |
+| `spacing.md` | Full — 10-step T-shirt scale, 4px base, with per-component mapping. Base unit assumed. |
+| `radii.md` | Full — four-step scale (sm / md / lg / pill), with per-component mapping. Exact values approximate. |
+| `shadows.md` | Not written. Admin screens show little elevation; add when observed. |
 
 ## Discipline
 

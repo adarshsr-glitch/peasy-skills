@@ -10,6 +10,17 @@ Every change to the pack that affects skill output lands here, newest first. The
 - Change 2
 ```
 
+## 2026-10-28 — Token layer growth: radii, spacing, semantic colors
+
+- `tokens/radii.md` added: four-step scale (sm 4 / md 8 / lg 16 / pill 999) with per-component mapping.
+- `tokens/spacing.md` added: 10-step T-shirt scale on a 4px base, with per-component mapping. Non-sequential steps (7, 9, 11) intentionally skipped — not observed.
+- `tokens/colors.md` extended with two new tiers:
+  - **Semantic — status**: `--success-*`, `--neutral-*`, `--info-*`, `--danger-*`, (`--warning-*` placeholder). Approximate hex values; several flagged inferred.
+  - **Semantic — structural**: `--surface-base`, `--surface-page`, `--surface-raised`, `--border-subtle`, `--border-strong`, `--ink-strong`, `--ink-muted`.
+  - Per-component token mapping table added at the bottom.
+- `tokens/README.md` updated to reflect the new coverage: colors full, spacing + radii full (with caveats), typography still preliminary, shadows not written.
+- Three component files (Button, Dropdown, Badge) still carry `**inference**` markers on tokens that these new files now define. Reconciliation is a separate pass — the next harvest run will pick up the real token names.
+
 ## 2026-10-28 — First component harvest (Button, Dropdown, Badge)
 
 - `components/Button.md`: source `figma-png + live-site`. Two button families observed — pill primary on marketing, rounded primary in admin — plus ghost. Full observable API, variants, tokens, open questions.
