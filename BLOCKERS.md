@@ -4,13 +4,11 @@ Things the project cannot advance past without an external action.
 
 ## Phase 1 — knowledge pack skeleton
 
-**Peasy frontend repo not cloned locally.** The pack imports tokens and components directly from Peasy's real frontend; nothing in `pack/tokens/`, `pack/components/`, or `pack/patterns/` can be populated until the repo is on disk and read access is confirmed.
-
-Blocks:
+**Peasy frontend repo not cloned locally.** Preliminary tokens, terminology, and one pattern have been drafted from on-disk material (brand kit, Jira doc, live-site browser extraction). What still blocks on the frontend repo:
 
 - Phase 0 stack audit (framework, component library name, token file path, build tool).
-- Phase 1 token import.
-- Phase 1 component harvest.
+- `pack/components/` — API files for every Peasy component the pipeline reuses. The ANB-1293 minimum set is listed in `pack/components/README.md`.
+- Reconciling `pack/tokens/colors.md` and `pack/tokens/typography.md` against the real source. The preliminary values are good enough to run a thin pipeline but not to ship a prototype.
 - Phase 3 prototype build (needs a branch on the real frontend).
 
 Unblock by: cloning the repo somewhere on this machine and pointing the session at it.
