@@ -2,7 +2,7 @@
 
 Run date: 2026-10-28
 Pack version: whatever's at HEAD when this prototype was built.
-Prototype output: `sandbox/src/features/anb-1293-electricity/EditView.tsx` and `./*.module.css`.
+Prototype output: `sandbox/src/features/anb-1293-electricity/` — now covering all three ANB-1293 flows (edit / create / duplicate).
 
 Honest accounting of where the prototype departed from the pack, and where the pack itself is still a reconstruction rather than a mirror.
 
@@ -61,9 +61,13 @@ The sandbox loads Manrope from Google Fonts as a fallback for both Grold and gff
 
 The pack doesn't define a dedicated "metadata chip" or "date stamp" component; the sandbox renders them inline inside `PageHeader meta`. Peasy may ship `Chip` and `DateStamp` as named components — snippet request priority: low.
 
-### No actual save, no routing, no validation
+### No actual save, no routing, no server-side validation
 
-The sandbox is state-only. "Nieuw product," "Dupliceer product," and both Save buttons are no-ops. The create and duplicate flows are not implemented — only the `product-selected` edit view. `ANB-1358` uniqueness, `ANB-1303 AC5` empty-field validation, and `ANB-1305 AC4` single-product update are all behavioral requirements the pack documents but the prototype doesn't exercise.
+The sandbox is state-only. The Save button on the edit view is a no-op; `Product aanmaken` and `Product dupliceren` show a confirmation `alert()` and return to edit without persisting anything. `ANB-1358` uniqueness, `ANB-1303 AC5` empty-field validation, and `ANB-1305 AC4` single-product update are all behavioral requirements the pack documents but the prototype doesn't exercise.
+
+### No page-refresh behavior
+
+`ANB-1303 Notes` and `ANB-1347 Notes` require refresh during create/duplicate to behave as Cancel. The sandbox implements Cancel but not the refresh branch — the browser refresh reloads with fresh state regardless. Would need session storage + onbeforeunload for proper handling.
 
 ## What the sandbox proves
 
@@ -71,13 +75,18 @@ The sandbox is state-only. "Nieuw product," "Dupliceer product," and both Save b
 - The token layer is sufficient to style the entire page without a literal hex anywhere in the component or feature code.
 - The `ANB-1306 AC5` locked-state behavior is expressible on `RadioGroup`'s observable API.
 - The `--info-bg` / `--info-fg` tier added to colors.md is exactly the metadata-chip tint — confirmed useful.
+- **All three ANB-1293 flows (edit / create / duplicate) share a single `SpecFieldsGrid` component.** Rendering the 17 fields identically across flows is a straight read of ANB-1304 AC1; the extraction cost was one small component.
+- **`ANB-1303 AC3` + `ANB-1347 AC4` (supplier read-only during create/duplicate) is a layout concern, not a component change.** The sandbox hides the supplier Dropdown and renders a static `Leverancier : X` line during those views. No new Dropdown variant needed.
+- **`ANB-1347 AC3` (duplicate prefill rules)** is a 3-line transform (`duplicateFromSource` in `fixtures.ts`) — not a component or pack concern.
+- **`ANB-1303 AC7` + `ANB-1347 AC8` (Cancel restores prior state)** is a snapshot pattern (`savedForm` state before entering the flow) — expressible in idiomatic React without additional component props.
 
 ## What the sandbox does NOT prove
 
 - Visual fidelity scoring. Side-by-side with the Figma or live product would need Figma dev mode + real tokens.
 - Interaction fidelity. Dropdown open state, hover / focus / active states, keyboard navigation — all inferences.
 - Rule enforcement in behavior. Validation, uniqueness, Save update scope — none exercised.
-- Create and Duplicate flows. Not implemented.
+- Page-refresh-as-cancel per `ANB-1303 Notes` and `ANB-1347 Notes`.
+- Actual persistence of create/duplicate — Save buttons alert and return to edit; nothing is saved.
 
 ## Priority snippet-request list, carried forward
 

@@ -94,3 +94,37 @@ export const initialFormState: FormState = {
   verwerkingslinkNL: 'https://www.engie.be/nl/contract/simulatie?scenario=6',
   verwerkingslinkFR: 'https://www.engie.be/fr/contrat/simulation?scenario=6',
 };
+
+// Empty state used when entering the create flow. Status defaults to "actief"
+// so the Toon-locked rule doesn't fire on a fresh form; everything else is blank.
+export const emptyFormState: FormState = {
+  productnaamNL: '',
+  productnaamFR: '',
+  status: 'actief',
+  toonInVergelijking: 'ja',
+  tarieftype: null,
+  metertype: null,
+  commissie: null,
+  onlineContract: null,
+  klantendienst: [],
+  situatie: [],
+  klantsegment: null,
+  betaalmethoden: [],
+  groeneEnergie: null,
+  regio: [],
+  contractduur: '',
+  indexeringsperiode: '',
+  verwerkingslinkNL: '',
+  verwerkingslinkFR: '',
+};
+
+// ANB-1347 AC3: duplication prefills everything from the source EXCEPT
+// Productnaam NL / FR (empty) and Toon in vergelijking (Nee).
+export function duplicateFromSource(source: FormState): FormState {
+  return {
+    ...source,
+    productnaamNL: '',
+    productnaamFR: '',
+    toonInVergelijking: 'nee',
+  };
+}
