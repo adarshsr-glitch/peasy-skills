@@ -10,6 +10,13 @@ Every change to the pack that affects skill output lands here, newest first. The
 - Change 2
 ```
 
+## 2026-10-28 — First component harvest (Button, Dropdown, Badge)
+
+- `components/Button.md`: source `figma-png + live-site`. Two button families observed — pill primary on marketing, rounded primary in admin — plus ghost. Full observable API, variants, tokens, open questions.
+- `components/Dropdown.md`: source `figma-png`. Admin form dropdown with chevron, label-above, status-colored items per ANB-1306 AC3. Open-state treatment is a priority snippet request.
+- `components/Badge.md`: source `figma-png`. Status pill with leading dot: Actief (green) observed, Niet actief (grey) specified by ticket but not visually observed. Six semantic status tokens need `pack/tokens/colors.md` to grow a status tier.
+- Surfaced a pattern across all three: `pack/tokens/radii.md` and `pack/tokens/spacing.md` don't exist yet, and `colors.md` has no semantic status tokens. That's the next pack gap.
+
 ## 2026-10-28 — Observational pivot
 
 - Confirmed Peasy keeps its frontend code internal; no repo access now or later.
