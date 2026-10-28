@@ -1,0 +1,29 @@
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.row.ai { justify-content: flex-start; }
+.row.user { justify-content: flex-end; }
+
+.bubble {
+  max-width: min(560px, 85%);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.row.ai .bubble {
+  background: var(--surface-base);
+  color: var(--ink-strong);
+  border: 1px solid var(--border-subtle);
+  border-top-left-radius: var(--radius-sm);
+}
+
+.row.user .bubble {
+  background: var(--indigo);
+  color: var(--surface-base);
+  border-top-right-radius: var(--radius-sm);
+}

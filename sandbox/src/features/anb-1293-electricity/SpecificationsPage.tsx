@@ -23,7 +23,11 @@ import styles from './SpecificationsPage.module.css';
 
 type View = 'edit' | 'create' | 'duplicate';
 
-export function SpecificationsPage() {
+type SpecificationsPageProps = {
+  onBack?: () => void;
+};
+
+export function SpecificationsPage({ onBack }: SpecificationsPageProps = {}) {
   const [supplierId, setSupplierId] = useState<SupplierId>('engie');
   const [productId, setProductId] = useState<ProductId>('engie-basic-online');
   const [view, setView] = useState<View>('edit');
@@ -70,6 +74,11 @@ export function SpecificationsPage() {
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
+        {onBack && (
+          <button type="button" className={styles.backLink} onClick={onBack}>
+            ← Back to brainstorm
+          </button>
+        )}
         {view === 'edit' ? (
           <EditTopBar
             supplierId={supplierId}

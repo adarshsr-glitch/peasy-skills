@@ -69,6 +69,15 @@ The sandbox is state-only. The Save button on the edit view is a no-op; `Product
 
 `ANB-1303 Notes` and `ANB-1347 Notes` require refresh during create/duplicate to behave as Cancel. The sandbox implements Cancel but not the refresh branch — the browser refresh reloads with fresh state regardless. Would need session storage + onbeforeunload for proper handling.
 
+## Architectural note added later
+
+The sandbox landing page is the **Peasy Brainstorm** UI (`sandbox/src/features/brainstorm/`). A PM types a vague brief, answers five back-and-forth questions, and gets a Jira-ready markdown spec with a Copy button. The ANB-1293 edit view sits behind a "See the prototype" link from the brainstorm page.
+
+This **reverses the earlier design decision** that the brainstorm skill is a one-shot questionnaire. The new shape is an interactive chat. Two things follow:
+
+1. `.claude/skills/peasy-brainstorm/SKILL.md` is now stale on that point — it still describes the one-shot flow. Reconciling the skill with the UI is a next-turn task.
+2. The sandbox mocks the AI. The five questions are hardcoded in `sandbox/src/features/brainstorm/questions.ts`; the generator is a hand-written template in `generateJiraMarkdown.ts`. In production both are replaced by real Claude calls — which require a backend the sandbox doesn't yet have.
+
 ## What the sandbox proves
 
 - The 9 pack component files compose into a working admin surface. The Figma composition is achievable from the pack APIs without inventing a new component.
