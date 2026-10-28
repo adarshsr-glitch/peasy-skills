@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLang } from '../../i18n';
 import { Button } from '../../components/Button';
 import type { Scenario } from './scenarios/types';
 import styles from './ScenarioOutput.module.css';
@@ -9,6 +10,7 @@ type ScenarioOutputProps = {
 };
 
 export function ScenarioOutput({ scenario, answers }: ScenarioOutputProps) {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
   const markdown = scenario.generateMarkdown(answers);
   const Prototype = scenario.Prototype;
@@ -29,11 +31,11 @@ export function ScenarioOutput({ scenario, answers }: ScenarioOutputProps) {
         <section className={styles.jiraPanel}>
           <header className={styles.panelHeader}>
             <div>
-              <span className={styles.panelEyebrow}>Jira draft</span>
-              <h3 className={styles.panelTitle}>Ticket body</h3>
+              <span className={styles.panelEyebrow}>{t('output.jira-eyebrow')}</span>
+              <h3 className={styles.panelTitle}>{t('output.jira-title')}</h3>
             </div>
             <Button variant="primary" onClick={copy}>
-              {copied ? 'Copied ✓' : 'Copy markdown'}
+              {copied ? t('output.copied') : t('output.copy')}
             </Button>
           </header>
           <pre className={styles.markdown}>{markdown}</pre>
@@ -42,8 +44,8 @@ export function ScenarioOutput({ scenario, answers }: ScenarioOutputProps) {
         <section className={styles.previewPanel}>
           <header className={styles.panelHeader}>
             <div>
-              <span className={styles.panelEyebrow}>Prototype</span>
-              <h3 className={styles.panelTitle}>Live preview</h3>
+              <span className={styles.panelEyebrow}>{t('output.proto-eyebrow')}</span>
+              <h3 className={styles.panelTitle}>{t('output.proto-title')}</h3>
             </div>
           </header>
           <div className={styles.previewFrame}>

@@ -1,26 +1,25 @@
 import { useState } from 'react';
+import { useLang } from '../../../../i18n';
 import styles from './Prototype.module.css';
-
-// Peasy mapping: appears on peasy.be/energie/ above the fold. Uses a radio-
-// group semantic but renders as three equal-width tiles with iconography.
-// Pack components reused: tokens; option-tile composition is scenario-local.
 
 type OptionId = 'electricity' | 'gas' | 'both';
 
-const options: ReadonlyArray<{ id: OptionId; label: string; icon: () => JSX.Element }> = [
-  { id: 'electricity', label: 'Elektriciteit', icon: BoltIcon },
-  { id: 'gas', label: 'Gas', icon: FlameIcon },
-  { id: 'both', label: 'Elektriciteit en gas', icon: BoltFlameIcon },
-];
-
 export function Prototype() {
+  const { t } = useLang();
   const [selected, setSelected] = useState<OptionId | null>(null);
+
+  const options: ReadonlyArray<{ id: OptionId; label: string; icon: () => JSX.Element }> = [
+    { id: 'electricity', label: t('energy.electricity'), icon: BoltIcon },
+    { id: 'gas', label: t('energy.gas'), icon: FlameIcon },
+    { id: 'both', label: t('energy.both'), icon: BoltFlameIcon },
+  ];
+
   return (
     <div className={styles.frame}>
       <div className={styles.card}>
         <div className={styles.headingBlock}>
-          <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
-          <p className={styles.subheading}>Kies elektriciteit, gas of beide.</p>
+          <h2 className={styles.heading}>{t('energy.heading')}</h2>
+          <p className={styles.subheading}>{t('energy.subheading')}</p>
         </div>
         <div className={styles.options} role="radiogroup">
           {options.map((o) => {
@@ -51,7 +50,7 @@ export function Prototype() {
             className={styles.next}
             disabled={!selected}
           >
-            Volgende
+            {t('energy.next')}
           </button>
         </div>
       </div>

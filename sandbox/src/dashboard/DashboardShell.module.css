@@ -9,6 +9,49 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Language toggle — top-right of main content area */
+.langToggle {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  z-index: 10;
+}
+
+.langBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: border-color 0.15s;
+}
+
+.langBtn:hover {
+  border-color: var(--indigo);
+}
+
+.langActive {
+  color: var(--indigo);
+}
+
+.langInactive {
+  color: var(--ink-muted);
+}
+
+.langDivider {
+  color: var(--border-subtle);
+  margin: 0 1px;
 }
 
 .home {

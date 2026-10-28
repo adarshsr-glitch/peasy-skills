@@ -1,21 +1,67 @@
 import type { Scenario } from '../types';
 import { Prototype } from './Prototype';
 
-const vagueBrief =
-  "The 'Hulp nodig?' panel we show across the site. Mascot on the left, four contact options on the right (call, callback, book appointment, email). Four tiles total.";
-
 export const helpPanel: Scenario = {
   id: 'help-panel',
-  label: 'Help · "Hulp nodig?" contact panel',
-  shortLabel: 'Help panel',
+  label: {
+    nl: 'Help · "Hulp nodig?" contactpaneel',
+    en: 'Help · "Hulp nodig?" contact panel',
+  },
+  shortLabel: { nl: 'Helppaneel', en: 'Help panel' },
   peasyUrl: 'https://peasy.be/',
-  description: 'Mascot + four contact tiles (Bellen / Terugbellen / Afspraak / Mailen).',
-  vagueBrief,
+  description: {
+    nl: 'Mascotte + vier contacttegels (Bellen / Terugbellen / Afspraak / Mailen).',
+    en: 'Mascot + four contact tiles (Bellen / Terugbellen / Afspraak / Mailen).',
+  },
+  vagueBrief: {
+    nl: "Het 'Hulp nodig?'-paneel dat we overal op de site tonen. Mascotte links, vier contactopties rechts (bellen, terugbellen, afspraak boeken, mailen). Vier tegels in totaal.",
+    en: "The 'Hulp nodig?' panel we show across the site. Mascot on the left, four contact options on the right (call, callback, book appointment, email). Four tiles total.",
+  },
   questions: [
-    { id: 'surfaces', prompt: "Which surfaces should display this panel?" },
-    { id: 'routing', prompt: "What should each tile route to or trigger when tapped?" },
-    { id: 'phone', prompt: "What phone number should appear on the Bellen tile?" },
-    { id: 'mobile', prompt: "How should the panel adapt at phone width?" },
+    {
+      id: 'surfaces',
+      prompt: {
+        nl: 'Op welke pagina\'s moet dit paneel zichtbaar zijn?',
+        en: 'Which surfaces should display this panel?',
+      },
+      suggestions: {
+        nl: ['Footer van elke pagina', 'Alleen homepage + verticale pagina\'s', 'Alleen op vergelijkingsresultatenpagina\'s'],
+        en: ['Every page footer', 'Homepage + vertical pages only', 'Only comparison result pages'],
+      },
+    },
+    {
+      id: 'routing',
+      prompt: {
+        nl: 'Wat moet elke tegel doen als erop getikt wordt?',
+        en: 'What should each tile route to or trigger when tapped?',
+      },
+      suggestions: {
+        nl: ['Open inline modaal per actie', 'Navigeer naar /contact met anker', 'Gebruik native tel:/mailto: links'],
+        en: ['Open inline modal per action', 'Navigate to /contact with anchor', 'Trigger native tel:/mailto: links'],
+      },
+    },
+    {
+      id: 'phone',
+      prompt: {
+        nl: 'Welk telefoonnummer moet op de Bellen-tegel staan?',
+        en: 'What phone number should appear on the Bellen tile?',
+      },
+      suggestions: {
+        nl: ['03 501 22 22', 'Regionaal nummer op basis van bezoeker', 'Generiek 0800-nummer'],
+        en: ['03 501 22 22', 'Regional number based on visitor', 'Generic 0800 number'],
+      },
+    },
+    {
+      id: 'mobile',
+      prompt: {
+        nl: 'Hoe moet het paneel zich aanpassen op telefoonbreedte?',
+        en: 'How should the panel adapt at phone width?',
+      },
+      suggestions: {
+        nl: ['Tegels in 2×2 raster stapelen', 'Enkele kolom, mascotte verborgen', 'Horizontale scroll van tegels'],
+        en: ['Stack tiles 2×2 grid', 'Single column, mascot hidden', 'Horizontal scroll of tiles'],
+      },
+    },
   ],
   Prototype,
   generateMarkdown(answers) {

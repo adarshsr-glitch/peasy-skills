@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useLang } from '../../i18n';
 import { Button } from '../../components/Button';
 import { ChatBubble } from '../../components/ChatBubble';
 import { Textarea } from '../../components/Textarea';
@@ -20,14 +21,18 @@ type ScenarioChatProps = {
 };
 
 export function ScenarioChat({ scenario, state, onUpdate }: ScenarioChatProps) {
+  const { lang, t } = useLang();
   const transcriptRef = useRef<HTMLDivElement | null>(null);
+  const composerRef = useRef<HTMLDivElement | null>(null);
   const currentQ = state.briefSent ? scenario.questions[state.cursor] : null;
   const total = scenario.questions.length;
+  const briefPrefilled = scenario.vagueBrief[lang].trim() !== '';
 
   useEffect(() => {
     if (transcriptRef.current) {
       transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
     }
+    composerRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
   }, [state.cursor, state.briefSent]);
 
   function submit() {
@@ -52,46 +57,56 @@ export function ScenarioChat({ scenario, state, onUpdate }: ScenarioChatProps) {
   }
 
   const progressLabel = !state.briefSent
-    ? 'Describe the feature'
+    ? t('chat.describe')
     : currentQ
-      ? `Question ${state.cursor + 1} of ${total}`
-      : 'All answered';
+      ? t('chat.question-of', { n: state.cursor + 1, total })
+      : t('chat.all-answered');
 
   const buttonLabel = !state.briefSent
-    ? 'Send'
+    ? t('chat.send')
     : state.cursor + 1 === total
-      ? 'Finish & draft ticket'
-      : 'Send';
+      ? t('chat.finish')
+      : t('chat.send');
 
   return (
     <div className={styles.chat}>
       <div className={styles.transcript} ref={transcriptRef}>
         <ChatBubble from="ai">
           {state.briefSent
-            ? "Thanks — a few follow-ups so the ticket and prototype come out the way you want."
-            : "Describe the feature you'd like to build. For this demo the prompt is prefilled — press Enter to send, or edit it first."}
+            ? t('chat.greeting')
+            : briefPrefilled
+              ? t('chat.intro')
+              : t('chat.intro-blank')}
         </ChatBubble>
 
         {state.briefSent && (
-          <ChatBubble from="user">{scenario.vagueBrief}</ChatBubble>
+          <ChatBubble from="user">{scenario.vagueBrief[lang]}</ChatBubble>
         )}
 
         {state.briefSent &&
           scenario.questions.slice(0, state.cursor).map((q) => (
             <div key={q.id}>
-              <ChatBubble from="ai">{q.prompt}</ChatBubble>
+              <ChatBubble from="ai">{q.prompt[lang]}</ChatBubble>
               <ChatBubble from="user">{state.answers[q.id]}</ChatBubble>
             </div>
           ))}
 
-        {currentQ && <ChatBubble from="ai">{currentQ.prompt}</ChatBubble>}
+        {currentQ && (
+          <ChatBubble
+            from="ai"
+            suggestions={currentQ.suggestions?.[lang]}
+            onSuggestionClick={(text) => onUpdate({ draft: text })}
+          >
+            {currentQ.prompt[lang]}
+          </ChatBubble>
+        )}
       </div>
 
-      <div className={styles.composer}>
+      <div className={styles.composer} ref={composerRef}>
         <Textarea
           value={state.draft}
           onChange={(v) => onUpdate({ draft: v })}
-          placeholder="Type your reply… Enter to send, Shift+Enter for a newline."
+          placeholder={t('chat.placeholder')}
           rows={3}
           onEnter={submit}
         />

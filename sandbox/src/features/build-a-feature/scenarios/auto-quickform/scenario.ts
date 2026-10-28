@@ -1,21 +1,67 @@
 import type { Scenario } from '../types';
 import { Prototype } from './Prototype';
 
-const vagueBrief =
-  "On the auto-insurance page, we need the quick-start form at the top: year of make, car brand, fuel type. One 'Vergelijk' button that kicks off the comparison.";
-
 export const autoQuickform: Scenario = {
   id: 'auto-quickform',
-  label: 'Auto · Quick-start form',
-  shortLabel: 'Auto quickform',
+  label: {
+    nl: 'Auto · Quick-start formulier',
+    en: 'Auto · Quick-start form',
+  },
+  shortLabel: { nl: 'Auto formulier', en: 'Auto quickform' },
   peasyUrl: 'https://peasy.be/autoverzekering/',
-  description: 'Bouwjaar / Merk / Brandstof form on peasy.be/autoverzekering/.',
-  vagueBrief,
+  description: {
+    nl: 'Bouwjaar / Merk / Brandstof formulier op peasy.be/autoverzekering/.',
+    en: 'Bouwjaar / Merk / Brandstof form on peasy.be/autoverzekering/.',
+  },
+  vagueBrief: {
+    nl: "Op de autoverzekeringspagina hebben we het quick-start formulier nodig bovenaan: bouwjaar, automerk, brandstoftype. Eén 'Vergelijk'-knop die de vergelijking start.",
+    en: "On the auto-insurance page, we need the quick-start form at the top: year of make, car brand, fuel type. One 'Vergelijk' button that kicks off the comparison.",
+  },
   questions: [
-    { id: 'validation', prompt: "How should the Vergelijk button behave when a field is empty?" },
-    { id: 'brand-source', prompt: "Where should the car-brand list be sourced from?" },
-    { id: 'post-submit', prompt: "What should happen on screen immediately after Vergelijk is clicked?" },
-    { id: 'plate-shortcut', prompt: "Should the form also accept a licence plate as a shortcut?" },
+    {
+      id: 'validation',
+      prompt: {
+        nl: 'Hoe moet de Vergelijk-knop zich gedragen als een veld leeg is?',
+        en: 'How should the Vergelijk button behave when a field is empty?',
+      },
+      suggestions: {
+        nl: ['Uitschakelen tot alles ingevuld', 'Inline foutmelding per veld tonen', 'Schudden en lege velden markeren'],
+        en: ['Disable until all filled', 'Show inline error per field', 'Shake and highlight empty fields'],
+      },
+    },
+    {
+      id: 'brand-source',
+      prompt: {
+        nl: 'Waar moet de lijst met automerken vandaan komen?',
+        en: 'Where should the car-brand list be sourced from?',
+      },
+      suggestions: {
+        nl: ['CMS-beheerde lijst', 'Live API van verzekeraarsfeed', 'Statische JSON in codebase'],
+        en: ['CMS-managed list', 'Live API from insurer feed', 'Static JSON in codebase'],
+      },
+    },
+    {
+      id: 'post-submit',
+      prompt: {
+        nl: 'Wat moet er op het scherm gebeuren direct na het klikken op Vergelijk?',
+        en: 'What should happen on screen immediately after Vergelijk is clicked?',
+      },
+      suggestions: {
+        nl: ['Navigeer naar resultatenpagina', 'Toon inline spinner en dan resultaten', 'Open stapsgewijze flow in een modaal'],
+        en: ['Navigate to results page', 'Show inline spinner then results', 'Open stepped flow in a modal'],
+      },
+    },
+    {
+      id: 'plate-shortcut',
+      prompt: {
+        nl: 'Moet het formulier ook een kenteken als snelkoppeling accepteren?',
+        en: 'Should the form also accept a licence plate as a shortcut?',
+      },
+      suggestions: {
+        nl: ['Ja, vul alle velden automatisch in via kenteken', 'Nee, alleen handmatige invoer', 'Toekomstige fase — nu niet'],
+        en: ['Yes, auto-fill all fields from plate', 'No, keep it to manual entry', 'Future phase — not now'],
+      },
+    },
   ],
   Prototype,
   generateMarkdown(answers) {

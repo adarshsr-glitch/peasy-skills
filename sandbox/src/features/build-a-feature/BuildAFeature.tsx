@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLang } from '../../i18n';
 import { scenarios, findScenario } from './scenarios';
 import type { Scenario } from './scenarios/types';
 import { ScenarioTab } from './ScenarioTab';
@@ -9,8 +10,6 @@ type BuildAFeatureProps = {
   onSelect: (id: string) => void;
 };
 
-// Each tab's state is kept in a Map so switching between tabs preserves
-// chat progress and output.
 type TabState = {
   briefSent: boolean;
   cursor: number;
@@ -28,6 +27,7 @@ const freshTab = (brief = ''): TabState => ({
 });
 
 export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps) {
+  const { lang, t } = useLang();
   const [tabStates, setTabStates] = useState<Record<string, TabState>>({});
   const openedRef = useRef<Set<string>>(new Set());
 
@@ -36,9 +36,9 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
   useEffect(() => {
     if (active && !openedRef.current.has(active.id)) {
       openedRef.current.add(active.id);
-      setTabStates((prev) => ({ ...prev, [active.id]: freshTab(active.vagueBrief) }));
+      setTabStates((prev) => ({ ...prev, [active.id]: freshTab(active.vagueBrief[lang]) }));
     }
-  }, [active]);
+  }, [active, lang]);
 
   function updateTab(id: string, next: Partial<TabState>) {
     setTabStates((prev) => ({
@@ -51,7 +51,7 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
     const scenario = findScenario(id);
     setTabStates((prev) => ({
       ...prev,
-      [id]: freshTab(scenario?.vagueBrief ?? ''),
+      [id]: freshTab(scenario?.vagueBrief[lang] ?? ''),
     }));
   }
 
@@ -59,11 +59,9 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <div>
-          <span className={styles.eyebrow}>Build a feature</span>
-          <h1 className={styles.title}>Turn a brief into a ticket and a prototype</h1>
-          <p className={styles.lede}>
-            Open a tab, describe the feature in a line or two, and Studio asks what it needs before drafting a Jira ticket and a working prototype you can share with design and engineering.
-          </p>
+          <span className={styles.eyebrow}>{t('build.eyebrow')}</span>
+          <h1 className={styles.title}>{t('build.title')}</h1>
+          <p className={styles.lede}>{t('build.lede')}</p>
         </div>
       </header>
 
@@ -81,11 +79,11 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
               className={`${styles.tab} ${isActive ? styles.tabActive : ''}`}
               onClick={() => onSelect(s.id)}
             >
-              <span className={styles.tabLabel}>{s.shortLabel}</span>
+              <span className={styles.tabLabel}>{s.shortLabel[lang]}</span>
               {state?.done ? (
-                <span className={styles.tabBadge}>Ticket ready</span>
+                <span className={styles.tabBadge}>{t('build.ticket-ready')}</span>
               ) : touched && state && state.cursor > 0 ? (
-                <span className={styles.tabBadgeMuted}>In progress</span>
+                <span className={styles.tabBadgeMuted}>{t('build.in-progress')}</span>
               ) : null}
             </button>
           );
@@ -110,13 +108,11 @@ export function BuildAFeature({ activeScenarioId, onSelect }: BuildAFeatureProps
 }
 
 function ScenarioEmpty({ onSelect: _onSelect }: { onSelect: (id: string) => void }) {
+  const { t } = useLang();
   return (
     <div className={styles.empty}>
-      <h2>Open a tab above to begin</h2>
-      <p>
-        Each tab opens a short brainstorm. Describe the feature, answer a few
-        follow-ups, then review the ticket and prototype side by side.
-      </p>
+      <h2>{t('build.empty.title')}</h2>
+      <p>{t('build.empty.desc')}</p>
     </div>
   );
 }

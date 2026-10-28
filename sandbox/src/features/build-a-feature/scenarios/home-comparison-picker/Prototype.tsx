@@ -1,33 +1,29 @@
+import { useLang } from '../../../../i18n';
 import styles from './Prototype.module.css';
-
-// Peasy mapping: this card renders on peasy.be/ as the primary comparison
-// entry point. Composition: Peasy indigo heading in Grold, cyan-tinted card,
-// five rows each with an icon circle + label + right-arrow button.
-// Pack components reused: visual tokens only; the row composition is
-// scenario-specific and lives here.
 
 type Vertical = {
   id: string;
-  label: string;
+  labelKey: string;
   href: string;
   Icon: () => JSX.Element;
 };
 
 const verticals: ReadonlyArray<Vertical> = [
-  { id: 'mortgage', label: 'Hypothecaire lening', href: 'https://peasy.be/hypotheek/', Icon: HouseIcon },
-  { id: 'auto', label: 'Autoverzekering', href: 'https://peasy.be/autoverzekering/', Icon: CarIcon },
-  { id: 'fire', label: 'Brandverzekering', href: 'https://peasy.be/brandverzekering/', Icon: HouseFireIcon },
-  { id: 'energy', label: 'Energie', href: 'https://peasy.be/energie/', Icon: PlugIcon },
-  { id: 'life', label: 'Schuldsaldoverzekering', href: 'https://peasy.be/schuldsaldoverzekering/', Icon: ShieldIcon },
+  { id: 'mortgage', labelKey: 'picker.mortgage', href: 'https://peasy.be/hypotheek/', Icon: HouseIcon },
+  { id: 'auto', labelKey: 'picker.auto', href: 'https://peasy.be/autoverzekering/', Icon: CarIcon },
+  { id: 'fire', labelKey: 'picker.fire', href: 'https://peasy.be/brandverzekering/', Icon: HouseFireIcon },
+  { id: 'energy', labelKey: 'picker.energy', href: 'https://peasy.be/energie/', Icon: PlugIcon },
+  { id: 'life', labelKey: 'picker.life', href: 'https://peasy.be/schuldsaldoverzekering/', Icon: ShieldIcon },
 ];
 
 export function Prototype() {
+  const { t } = useLang();
   return (
     <div className={styles.frame}>
       <div className={styles.card}>
         <div className={styles.headingBlock}>
-          <h2 className={styles.heading}>Wat wil je vergelijken?</h2>
-          <p className={styles.subheading}>Kies een vertical om te starten.</p>
+          <h2 className={styles.heading}>{t('picker.heading')}</h2>
+          <p className={styles.subheading}>{t('picker.subheading')}</p>
         </div>
         <ul className={styles.list}>
           {verticals.map((v) => (
@@ -36,7 +32,7 @@ export function Prototype() {
                 <span className={styles.iconCircle} aria-hidden="true">
                   <v.Icon />
                 </span>
-                <span className={styles.label}>{v.label}</span>
+                <span className={styles.label}>{t(v.labelKey)}</span>
                 <span className={styles.chevron} aria-hidden="true">
                   <ArrowIcon />
                 </span>
@@ -94,8 +90,8 @@ function ShieldIcon() {
 
 function ArrowIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-      <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

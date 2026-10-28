@@ -1,4 +1,5 @@
 import { autoQuickform } from './auto-quickform/scenario';
+import { blankNewFeature } from './blank-new-feature/scenario';
 import { energyStarter } from './energy-starter/scenario';
 import { helpPanel } from './help-panel/scenario';
 import { homeComparisonPicker } from './home-comparison-picker/scenario';
@@ -9,6 +10,7 @@ export const scenarios: ReadonlyArray<Scenario> = [
   energyStarter,
   autoQuickform,
   helpPanel,
+  blankNewFeature,
 ];
 
 export function findScenario(id: string | null | undefined): Scenario | undefined {

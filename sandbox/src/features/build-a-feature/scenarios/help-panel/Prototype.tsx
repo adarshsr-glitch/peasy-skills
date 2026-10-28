@@ -1,62 +1,61 @@
+import { useLang } from '../../../../i18n';
 import styles from './Prototype.module.css';
 
-// Peasy mapping: the 'Hulp nodig?' section visible on peasy.be/ (bottom
-// mid-page). Mascot + four contact tiles. Mascot illustration is a
-// stylized stand-in; swap for Peasy's real asset on port.
-
-const tiles = [
-  {
-    id: 'bellen',
-    icon: PhoneIcon,
-    title: 'Bellen',
-    description: '03 501 22 22',
-    cta: 'Bellen',
-    href: 'tel:+3235012222',
-  },
-  {
-    id: 'terugbellen',
-    icon: CallbackIcon,
-    title: 'Terugbellen',
-    description: 'Wij bellen je op wanneer het jou uitkomt',
-    cta: 'Terugbellen',
-    href: '#',
-  },
-  {
-    id: 'afspraak',
-    icon: CalendarIcon,
-    title: 'Afspraak plannen',
-    description: 'Boek een gesprek in de agenda van een expert.',
-    cta: 'Plannen',
-    href: '#',
-  },
-  {
-    id: 'mailen',
-    icon: MailIcon,
-    title: 'Mailen',
-    description: 'Vul ons contactformulier in',
-    cta: 'Mailen',
-    href: '#',
-  },
-] as const;
-
 export function Prototype() {
+  const { t } = useLang();
+
+  const tiles = [
+    {
+      id: 'bellen',
+      icon: PhoneIcon,
+      title: t('help.call.title'),
+      description: t('help.call.desc'),
+      cta: t('help.call.cta'),
+      href: 'tel:+3235012222',
+    },
+    {
+      id: 'terugbellen',
+      icon: CallbackIcon,
+      title: t('help.cb.title'),
+      description: t('help.cb.desc'),
+      cta: t('help.cb.cta'),
+      href: '#',
+    },
+    {
+      id: 'afspraak',
+      icon: CalendarIcon,
+      title: t('help.apt.title'),
+      description: t('help.apt.desc'),
+      cta: t('help.apt.cta'),
+      href: '#',
+    },
+    {
+      id: 'mailen',
+      icon: MailIcon,
+      title: t('help.mail.title'),
+      description: t('help.mail.desc'),
+      cta: t('help.mail.cta'),
+      href: '#',
+    },
+  ] as const;
+
   return (
     <div className={styles.frame}>
       <div className={styles.panel}>
         <aside className={styles.mascotCol}>
           <PeasyMascot />
-          <span className={styles.eyebrow}>Hulp nodig?</span>
-          <h2 className={styles.heading}>Ik sta voor je klaar!</h2>
+          <span className={styles.eyebrow}>{t('help.eyebrow')}</span>
+          <h2 className={styles.heading}>{t('help.heading')}</h2>
         </aside>
         <div className={styles.tiles}>
-          {tiles.map((t) => (
-            <article key={t.id} className={styles.tile}>
-              <span className={styles.tileIcon}><t.icon /></span>
+          {tiles.map((ti) => (
+            <article key={ti.id} className={styles.tile}>
+              <span className={styles.tileIcon}><ti.icon /></span>
               <div className={styles.tileBody}>
-                <h3 className={styles.tileTitle}>{t.title}</h3>
-                <p className={styles.tileDesc}>{t.description}</p>
+                <h3 className={styles.tileTitle}>{ti.title}</h3>
+                <p className={styles.tileDesc}>{ti.description}</p>
               </div>
-              <a href={t.href} className={styles.tileCta}>{t.cta}</a>
+              <a href={ti.href} className={styles.tileCta}>{ti.cta}</a>
             </article>
           ))}
         </div>
@@ -66,8 +65,6 @@ export function Prototype() {
 }
 
 function PeasyMascot() {
-  // Stylized stand-in for the Peasy mascot. The real asset is a hairy blue
-  // creature with a smile; this is a placeholder blob with the same spirit.
   return (
     <svg width="160" height="160" viewBox="0 0 160 160" fill="none" className={styles.mascot} aria-hidden="true">
       <ellipse cx="80" cy="120" rx="56" ry="14" fill="#394295" opacity="0.1" />
@@ -83,7 +80,6 @@ function PeasyMascot() {
       <circle cx="63" cy="83" r="1.6" fill="#ffffff" />
       <circle cx="103" cy="83" r="1.6" fill="#ffffff" />
       <path d="M60 102c6 6 34 6 40 0" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" fill="none" />
-      {/* Hairy edges */}
       <g stroke="#394295" strokeWidth="3" strokeLinecap="round">
         <path d="M30 36l-6-6M28 50l-8-2M30 70l-8 2M34 86l-8 4M44 102l-6 6M58 112l-4 8" />
         <path d="M130 36l6-6M132 50l8-2M130 70l8 2M126 86l8 4M116 102l6 6M102 112l4 8" />

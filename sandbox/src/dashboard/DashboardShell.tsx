@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLang, type Lang } from '../i18n';
 import { Sidebar } from './Sidebar';
 import { BuildAFeature } from '../features/build-a-feature/BuildAFeature';
 import { scenarios } from '../features/build-a-feature/scenarios';
@@ -33,6 +34,7 @@ function routeToHash(route: Route): string {
 
 export function DashboardShell() {
   const [route, setRoute] = useState<Route>(parseHash);
+  const { lang, setLang, t } = useLang();
 
   useEffect(() => {
     const onHash = () => setRoute(parseHash());
@@ -55,40 +57,56 @@ export function DashboardShell() {
     setRoute({ nav: 'build', scenarioId: id });
   }
 
+  function toggleLang() {
+    setLang(lang === 'nl' ? 'en' : 'nl');
+  }
+
   return (
     <div className={styles.shell}>
       <Sidebar active={route.nav} onNavigate={goTo} />
       <main className={styles.main}>
+        <div className={styles.langToggle}>
+          <LangSwitch lang={lang} onToggle={toggleLang} />
+        </div>
         {route.nav === 'home' && (
           <DashboardHome onBuildFeature={() => goTo('build')} />
         )}
         {route.nav === 'build' && (
           <BuildAFeature activeScenarioId={route.scenarioId} onSelect={openScenario} />
         )}
-        {route.nav === 'history' && <ComingSoon label="History" />}
-        {route.nav === 'settings' && <ComingSoon label="Settings" />}
+        {route.nav === 'history' && <ComingSoon label={t('nav.history')} />}
+        {route.nav === 'settings' && <ComingSoon label={t('nav.settings')} />}
       </main>
     </div>
   );
 }
 
+function LangSwitch({ lang, onToggle }: { lang: Lang; onToggle: () => void }) {
+  return (
+    <button type="button" className={styles.langBtn} onClick={onToggle} aria-label="Switch language">
+      <span className={lang === 'nl' ? styles.langActive : styles.langInactive}>NL</span>
+      <span className={styles.langDivider}>/</span>
+      <span className={lang === 'en' ? styles.langActive : styles.langInactive}>EN</span>
+    </button>
+  );
+}
+
 function DashboardHome({ onBuildFeature }: { onBuildFeature: () => void }) {
+  const { t } = useLang();
   return (
     <div className={styles.home}>
       <div className={styles.homeHero}>
         <span className={styles.eyebrow}>Peasy Studio</span>
-        <h1 className={styles.homeTitle}>What are you shipping today?</h1>
-        <p className={styles.homeLede}>
-          Peasy Studio turns a two-line idea into a Jira ticket and a working prototype that matches how Peasy already looks. Pick a feature to see the pipeline run.
-        </p>
+        <h1 className={styles.homeTitle}>{t('home.title')}</h1>
+        <p className={styles.homeLede}>{t('home.lede')}</p>
         <button type="button" className={styles.cta} onClick={onBuildFeature}>
-          Build a feature →
+          {t('home.cta')}
         </button>
       </div>
       <div className={styles.homeStats}>
-        <StatCard label="Features in demo" value={String(scenarios.length)} />
-        <StatCard label="Pack components" value="9" />
-        <StatCard label="Tokens defined" value="20+" />
+        <StatCard label={t('home.stat.features')} value={String(scenarios.length)} />
+        <StatCard label={t('home.stat.components')} value="9" />
+        <StatCard label={t('home.stat.tokens')} value="20+" />
       </div>
     </div>
   );
@@ -104,10 +122,11 @@ function StatCard({ label, value }: { label: string; value: string }) {
 }
 
 function ComingSoon({ label }: { label: string }) {
+  const { t } = useLang();
   return (
     <div className={styles.comingSoon}>
       <h2>{label}</h2>
-      <p>Not wired up yet. Only "Build a feature" is live in this demo.</p>
+      <p>{t('coming-soon')}</p>
     </div>
   );
 }

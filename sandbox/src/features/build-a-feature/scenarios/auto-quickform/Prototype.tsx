@@ -1,14 +1,13 @@
 import { useState } from 'react';
+import { useLang } from '../../../../i18n';
 import styles from './Prototype.module.css';
 
-// Peasy mapping: appears on peasy.be/autoverzekering/ above the fold.
-// Reuses pack TextInput + Dropdown shapes, but the three-across layout is
-// scenario-specific.
-
 const brands = ['Renault', 'Volkswagen', 'Peugeot', 'BMW', 'Toyota', 'Ford', 'Audi', 'Opel', 'Mercedes-Benz', 'Citroën'] as const;
-const fuels = ['Benzine', 'Diesel', 'Hybride', 'Elektrisch', 'LPG', 'CNG'] as const;
+
+const fuelKeys = ['benzine', 'diesel', 'hybride', 'elektrisch', 'lpg', 'cng'] as const;
 
 export function Prototype() {
+  const { t } = useLang();
   const [year, setYear] = useState('');
   const [brand, setBrand] = useState('');
   const [fuel, setFuel] = useState('');
@@ -18,11 +17,11 @@ export function Prototype() {
     <div className={styles.frame}>
       <div className={styles.card}>
         <div className={styles.headingBlock}>
-          <h2 className={styles.heading}>Vind je autoverzekering</h2>
-          <p className={styles.subheading}>Vul drie velden in en we vergelijken de aanbieders voor je.</p>
+          <h2 className={styles.heading}>{t('auto.heading')}</h2>
+          <p className={styles.subheading}>{t('auto.subheading')}</p>
         </div>
         <div className={styles.row}>
-          <Field label="Bouwjaar" required>
+          <Field label={t('auto.year')} required>
             <input
               type="text"
               inputMode="numeric"
@@ -32,37 +31,35 @@ export function Prototype() {
               className={styles.input}
             />
           </Field>
-          <Field label="Merk" required>
+          <Field label={t('auto.brand')} required>
             <select
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               className={styles.select}
             >
-              <option value="">Maak je keuze</option>
+              <option value="">{t('auto.choose')}</option>
               {brands.map((b) => (
                 <option key={b} value={b}>{b}</option>
               ))}
             </select>
           </Field>
-          <Field label="Type brandstof" required>
+          <Field label={t('auto.fuel')} required>
             <select
               value={fuel}
               onChange={(e) => setFuel(e.target.value)}
               className={styles.select}
             >
-              <option value="">Maak je keuze</option>
-              {fuels.map((f) => (
-                <option key={f} value={f}>{f}</option>
+              <option value="">{t('auto.choose')}</option>
+              {fuelKeys.map((f) => (
+                <option key={f} value={f}>{t(`auto.fuel.${f}`)}</option>
               ))}
             </select>
           </Field>
         </div>
-        <p className={styles.helper}>
-          Alle velden zijn vereist. Je gegevens worden niet opgeslagen.
-        </p>
+        <p className={styles.helper}>{t('auto.helper')}</p>
         <div className={styles.actions}>
           <button type="button" className={styles.submit} disabled={!canSubmit}>
-            Vergelijk
+            {t('auto.submit')}
           </button>
         </div>
       </div>

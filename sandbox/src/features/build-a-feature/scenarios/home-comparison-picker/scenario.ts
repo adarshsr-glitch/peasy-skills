@@ -1,22 +1,78 @@
 import type { Scenario } from '../types';
 import { Prototype } from './Prototype';
 
-const vagueBrief =
-  "We need to let visitors on the homepage pick what they want to compare — mortgages, car insurance, fire insurance, energy, outstanding-balance insurance. One card, five rows, each takes them to the right vertical.";
-
 export const homeComparisonPicker: Scenario = {
   id: 'home-comparison-picker',
-  label: 'Home · Vertical comparison picker',
-  shortLabel: 'Home picker',
+  label: {
+    nl: 'Home · Verticale vergelijkingskiezer',
+    en: 'Home · Vertical comparison picker',
+  },
+  shortLabel: { nl: 'Home kiezer', en: 'Home picker' },
   peasyUrl: 'https://peasy.be/',
-  description: '"Wat wil je vergelijken?" card on peasy.be/ with 5 verticals.',
-  vagueBrief,
+  description: {
+    nl: '"Wat wil je vergelijken?" kaart op peasy.be/ met 5 verticals.',
+    en: '"Wat wil je vergelijken?" card on peasy.be/ with 5 verticals.',
+  },
+  vagueBrief: {
+    nl: 'We moeten bezoekers op de homepage laten kiezen wat ze willen vergelijken — hypotheken, autoverzekeringen, brandverzekeringen, energie, schuldsaldoverzekeringen. Eén kaart, vijf rijen, elke rij leidt naar de juiste vertical.',
+    en: "We need to let visitors on the homepage pick what they want to compare — mortgages, car insurance, fire insurance, energy, outstanding-balance insurance. One card, five rows, each takes them to the right vertical.",
+  },
   questions: [
-    { id: 'surface', prompt: "Where across the site should this card appear?" },
-    { id: 'default-vertical', prompt: "Which vertical, if any, should be visually prioritized?" },
-    { id: 'tracking', prompt: "What click-tracking event should fire when a visitor taps a row?" },
-    { id: 'content-source', prompt: "Where should the labels, icons, and target routes be sourced from?" },
-    { id: 'mobile', prompt: "How should the card behave at phone width?" },
+    {
+      id: 'surface',
+      prompt: {
+        nl: 'Waar op de site moet deze kaart verschijnen?',
+        en: 'Where across the site should this card appear?',
+      },
+      suggestions: {
+        nl: ['Alleen op de homepage', 'Homepage + vertical landingspagina\'s', 'Elke pagina in de footer'],
+        en: ['Homepage only', 'Homepage + vertical landing pages', 'Every page in the footer'],
+      },
+    },
+    {
+      id: 'default-vertical',
+      prompt: {
+        nl: 'Welke vertical moet eventueel visueel worden benadrukt?',
+        en: 'Which vertical, if any, should be visually prioritized?',
+      },
+      suggestions: {
+        nl: ['Hypothecaire lening', 'Geen — behandel ze allemaal gelijk', 'Degene met de beste huidige promo'],
+        en: ['Hypothecaire lening', 'None — treat all equally', 'Whichever has the best current promo'],
+      },
+    },
+    {
+      id: 'tracking',
+      prompt: {
+        nl: 'Welk klik-tracking event moet afgaan als een bezoeker op een rij tikt?',
+        en: 'What click-tracking event should fire when a visitor taps a row?',
+      },
+      suggestions: {
+        nl: ['vertical_card_click met vertical naam', 'GA4 custom event', 'Geen tracking nodig voor nu'],
+        en: ['vertical_card_click with vertical name', 'GA4 custom event', 'No tracking needed for now'],
+      },
+    },
+    {
+      id: 'content-source',
+      prompt: {
+        nl: 'Waar moeten de labels, iconen en doelroutes vandaan komen?',
+        en: 'Where should the labels, icons, and target routes be sourced from?',
+      },
+      suggestions: {
+        nl: ['Hardcoded in het component', 'CMS-beheerd contentblok', 'Gedeelde config JSON'],
+        en: ['Hardcoded in the component', 'CMS-managed content block', 'Shared config JSON'],
+      },
+    },
+    {
+      id: 'mobile',
+      prompt: {
+        nl: 'Hoe moet de kaart zich gedragen op telefoonbreedte?',
+        en: 'How should the card behave at phone width?',
+      },
+      suggestions: {
+        nl: ['Rijen verticaal stapelen', 'Horizontale scroll carousel', 'Samenvouwen tot een dropdown'],
+        en: ['Stack rows vertically', 'Horizontal scroll carousel', 'Collapse into a dropdown'],
+      },
+    },
   ],
   Prototype,
   generateMarkdown(answers) {

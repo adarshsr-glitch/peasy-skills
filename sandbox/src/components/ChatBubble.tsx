@@ -1,19 +1,35 @@
 import type { ReactNode } from 'react';
 import styles from './ChatBubble.module.css';
 
-// Sandbox-only. Not in the pack — a brainstorming surface isn't part of
-// the ANB-1293 benchmark. If this pattern lands in Peasy's admin, harvest
-// it into pack/patterns/ then.
-
 type ChatBubbleProps = {
   from: 'ai' | 'user';
   children: ReactNode;
+  suggestions?: readonly string[];
+  onSuggestionClick?: (text: string) => void;
 };
 
-export function ChatBubble({ from, children }: ChatBubbleProps) {
+export function ChatBubble({ from, children, suggestions, onSuggestionClick }: ChatBubbleProps) {
+  const hasSuggestions = from === 'ai' && suggestions && suggestions.length > 0;
+
   return (
     <div className={`${styles.row} ${styles[from]}`}>
-      <div className={styles.bubble}>{children}</div>
+      <div className={styles.column}>
+        <div className={styles.bubble}>{children}</div>
+        {hasSuggestions && (
+          <div className={styles.suggestions}>
+            {suggestions.map((s) => (
+              <button
+                key={s}
+                type="button"
+                className={styles.pill}
+                onClick={() => onSuggestionClick?.(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

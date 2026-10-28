@@ -1,3 +1,4 @@
+import { useLang } from '../i18n';
 import styles from './Sidebar.module.css';
 
 type NavItemId = 'home' | 'build' | 'history' | 'settings';
@@ -7,14 +8,16 @@ type SidebarProps = {
   onNavigate: (id: NavItemId) => void;
 };
 
-const items: ReadonlyArray<{ id: NavItemId; label: string; icon: React.ReactNode; enabled: boolean }> = [
-  { id: 'home', label: 'Dashboard', icon: <HomeIcon />, enabled: true },
-  { id: 'build', label: 'Build a feature', icon: <SparkleIcon />, enabled: true },
-  { id: 'history', label: 'History', icon: <ClockIcon />, enabled: false },
-  { id: 'settings', label: 'Settings', icon: <GearIcon />, enabled: false },
-];
-
 export function Sidebar({ active, onNavigate }: SidebarProps) {
+  const { t } = useLang();
+
+  const items: ReadonlyArray<{ id: NavItemId; label: string; icon: React.ReactNode; enabled: boolean }> = [
+    { id: 'home', label: t('nav.dashboard'), icon: <HomeIcon />, enabled: true },
+    { id: 'build', label: t('nav.build'), icon: <SparkleIcon />, enabled: true },
+    { id: 'history', label: t('nav.history'), icon: <ClockIcon />, enabled: false },
+    { id: 'settings', label: t('nav.settings'), icon: <GearIcon />, enabled: false },
+  ];
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
@@ -32,7 +35,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
           >
             <span className={styles.icon}>{item.icon}</span>
             <span className={styles.label}>{item.label}</span>
-            {!item.enabled && <span className={styles.soon}>soon</span>}
+            {!item.enabled && <span className={styles.soon}>{t('nav.soon')}</span>}
           </button>
         ))}
       </nav>

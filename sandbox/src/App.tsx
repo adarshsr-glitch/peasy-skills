@@ -1,5 +1,10 @@
+import { LangProvider } from './i18n';
 import { DashboardShell } from './dashboard/DashboardShell';
 
 export function App() {
-  return <DashboardShell />;
+  return (
+    <LangProvider>
+      <DashboardShell />
+    </LangProvider>
+  );
 }
