@@ -1,6 +1,6 @@
 ---
 name: peasy
-description: Turn a vague Peasy product brief (feature idea, PM scribble, Slack line) into a Jira-ready ticket and a Peasy-styled HTML prototype that adheres to the Peasy design system. Carries the full design-system reference (tokens, typography, components, imagery, do's and don'ts) plus the intake, requirements, and prototype contracts in one skill. Use whenever a PM or BA at Peasy wants to go from "we should build X" to "here is the ticket and here is a working prototype" in one pass. Belgian comparison-service domain: energy, insurance (auto, fire, outstanding-balance), mortgage, help/contact.
+description: Turn a one-line Peasy product brief into a Jira-ready ticket and a Peasy-styled HTML prototype in a single pass, with no clarifying questions. The skill reasons through the typical PM follow-ups (surface, audience, primary action, data source, constraints, edge cases) on its own using the design system and Peasy's verticals, drafts both artifacts, and ends with a numbered Assumptions log the PM accepts or corrects — the deterministic human checkpoint lives at the end, not the start. Use whenever a PM or BA at Peasy wants to go from "we should build X" to "here is the ticket and here is a working prototype" without an intake interview. Belgian comparison-service domain: energy, insurance (auto, fire, outstanding-balance), mortgage, help/contact.
 ---
 
 # peasy
@@ -15,21 +15,22 @@ Peasy helps Belgian households compare energy, insurance, and mortgage offers in
 
 Given a brief as short as `"a card on the help page that lets a visitor book a callback instead of calling"`, this skill will:
 
-1. **Intake** — ask up to six single-focus, non-leading follow-ups (surface, user job, primary action, data source, constraints, edge cases). It does not cap at a fixed number; it stops when the open questions are closed.
-2. **Draft a Jira-ready ticket** in Peasy's house format — summary, context, user story, acceptance criteria (Given/When/Then), copy table (NL / FR / EN), rule citations, out-of-scope, open questions.
+1. **Reason, don't ask.** Think through the six PM dimensions — surface, audience, primary action, data source, constraints, edge cases — using the design system below and what Peasy already is. Default to the most likely answer for a Belgian comparison service with the vertical and surface the brief implies.
+2. **Draft a Jira-ready ticket** in Peasy's house format — summary, context, user story, acceptance criteria (Given/When/Then), copy table (NL / FR / EN), rule citations, out-of-scope.
 3. **Produce an HTML prototype** that renders in a browser or an Artifact pane and reads as a Peasy surface at a glance — not pixel-perfect, deliberately in a 3–7% visual variance band from the live site so reviewers can diff.
+4. **End with an Assumptions log** — a numbered list of every call the skill made that the brief did not specify. The PM reads it, says "flip #2 and #5," and the skill revises. This is the entire human checkpoint; there is no front-of-pipeline interview.
 
-Both outputs cite the design system by token name. Nothing is invented.
+Both outputs cite the design system by token name. Nothing is invented — but educated inference *is* allowed, as long as it goes into the log.
 
 ## Trust ladder
 
-Every claim the skill makes is one of:
+Every claim the skill makes is one of three things, and the output tags which:
 
-- The user's own words (the brief, the enriched answers).
-- A fact from this file (tokens, components, copy conventions below).
-- A `[open]` placeholder the PM must resolve.
+- **From the brief** — the PM's own words, used verbatim where possible.
+- **From this file** — a token, component, copy convention, or rule written below. Cite by name.
+- **`[assumed]`** — the skill's own call on a dimension the brief did not fix. Every assumed value lands in the Assumptions log at the end of the output.
 
-Nothing else. If a question needs a rule or a component this file does not carry, the skill names the gap and refuses rather than inventing it.
+The point of the ladder is that the PM can trust the ticket as a draft because the uncertain parts are flagged. A rule or component this file does not carry stays an assumption; the skill does not invent business logic silently, but it also does not stop the pipeline. If a central decision truly cannot be reasoned (e.g., "add a thing to the site" with no verb or noun), the skill produces no artifacts and asks exactly one question. That is the only case where it asks.
 
 ---
 
@@ -223,26 +224,26 @@ Any copy string the user asked for must appear in all three languages in the tic
 - Do not import stock photography of smiling call-center staff. Use the mascot illustration or icon-only tiles.
 - Do not invent a business rule, a copy string, or a vertical that is not in this file or in the enriched brief. Mark it `[open]` and surface it to the PM.
 - Do not use rubric-leak language in the output ("mirrors peasy.be", "diff against the live site", "pixel copy", "this is a replica"). That framing is for internal evaluation, not the artifact a PM will share.
-- Do not ask leading, loaded, or compound follow-up questions. One decision per question, phrased neutrally.
+- Do not open the pipeline with an interview. Reason silently, draft both artifacts, and surface guesses in the Assumptions log at the end — the PM's time is the thing being saved.
 
 ---
 
-## Intake protocol
+## Inference protocol — do this silently, do not ask
 
-When the user sends a brief, respond with a single acknowledgement line and then ask follow-ups one at a time, each as a single-focus question. Stop asking when the open answers are closed; do not pad to a fixed count.
+When the brief arrives, the skill works through these six dimensions in its head and locks in the most likely answer. Each lock-in becomes a line in the Assumptions log at the end of the output.
 
-Canonical question families — adapt the wording to the brief:
+1. **Surface.** Which page or component in Peasy's existing navigation is this most likely on? Defaults: a brief that names a vertical (energy, auto, fire, outstanding balance, mortgage) → that vertical's landing page. A brief about help, contact, call-back, or an advisor → the Hulp panel. A brief about choosing between verticals → the home comparison card. A brief about an authenticated view → `Mijn Peasy`. If two surfaces are plausible, pick the one that reaches more visitors and note the alternative in the log.
+2. **Audience.** Default: a new or returning visitor who has not yet started a comparison. Shift only when the brief implies otherwise — post-conversion wording ("after they request a quote"), authenticated wording ("their saved offers"), or advisor-facing wording ("the agent who follows up").
+3. **Primary action.** Pick the single verb the surface should drive. If the brief names one, use it. If not, infer the smallest action that makes the surface useful: *compare*, *request a callback*, *save*, *continue to vertical X*, *contact an advisor*. One primary action per card. If a second plausible action exists, log it as out-of-scope rather than squeezing it in.
+4. **Data source.** Default: an existing Peasy partner catalog for anything that looks up a provider, product, or rate. A static list for anything that enumerates verticals, call-back time slots, or contact methods. Editorial content (headings, help copy) is the skill's own draft marked `[copy — PM to confirm]`. Never silently invent partner data.
+5. **Constraints.** Assume phone width always matters — Peasy's traffic is majority mobile. Assume NL default with FR and EN parity. Assume GDPR consent copy applies to any form that collects personal data, with the standard Peasy pattern (checkbox + short link to the privacy policy). Note any that the brief overrides.
+6. **Edge cases.** For every surface, lock in the obvious four: empty state, loading, error, and "unavailable in your region" where a Peasy vertical has regional availability. Add surface-specific ones (expired callback slot, out-of-hours call-centre, invalid license plate for auto, etc.) when the vertical implies them.
 
-1. **Surface** — where in the Peasy site does this live? (home, a vertical landing page, the help panel, a modal, an email)
-2. **Audience** — new visitor comparing offers, returning user with a saved comparison, help-seeker, or someone post-conversion?
-3. **Primary action** — what one thing should the visitor do on this surface?
-4. **Data source** — are we pulling from an existing partner catalog, a static list, or does the brief imply new content that needs editorial sign-off?
-5. **Constraints** — does the surface need to work at phone width? Does GDPR / consent copy need to appear?
-6. **Edge cases** — empty state, loading, error, unavailable in Wallonia, etc.
+The skill may spend a sentence of internal reasoning per dimension, but it does not print the reasoning in the output. The PM reads the artifacts and the Assumptions log, not the thought process.
 
-Never ask "would you like me to…" compound questions. Never offer three framings in the same question. If a question has multiple sub-decisions, split it.
+### The one case the skill asks
 
-After the final answer, do not ask for permission to draft. Produce both artifacts.
+If, and only if, the brief has no verb and no noun that maps to a Peasy surface — "do a thing," "improve stuff," "the new feature" — the skill produces no artifacts and asks exactly one question: *"What should this new surface help the visitor do?"* On receiving a one-sentence answer, it resumes the inference protocol and ships. This is the only interactive step in the pipeline.
 
 ---
 
@@ -257,14 +258,16 @@ A single markdown document, structured like Peasy's internal tickets:
 One sentence naming the surface, the audience, and the primary action.
 
 ## Context
-Two to four sentences on why this is being built now — motivation from the brief, not invented.
+Two to four sentences on why this is being built now — motivation from the brief where present,
+inferred from the surface + audience otherwise. Inferred sentences carry a trailing [assumed].
 
 ## User story
 As a <audience>, I want <action>, so that <outcome>.
 
 ## Acceptance criteria
 Given <state>, when <action>, then <outcome>. One criterion per rule.
-Cite the design-system component used.
+Cite the design-system component used (e.g. "renders a Comparison Card with the --info-bg wash").
+Each criterion the brief did not specify ends with [assumed].
 
 ## Copy
 | Key | NL | FR | EN |
@@ -272,17 +275,21 @@ Cite the design-system component used.
 | heading | … | … | … |
 | cta | … | … | … |
 
+Unseen French strings are [open — translation pending]. English is best-effort.
+
 ## Design tokens used
 Named list from --indigo, --info-bg, etc.
 
 ## Out of scope
-Bulleted list of what this ticket does NOT cover.
+Bulleted list of what this ticket does NOT cover — including plausible second actions
+the skill chose not to pack into this card.
 
-## Open questions
-Bulleted list of every [open] the PM still needs to resolve.
+## Assumptions log
+Numbered list of every call the skill made that the brief did not fix.
+Each entry is one line: "<dimension> — <what was assumed> — <why>."
 ```
 
-No invented rules. Any criterion that cannot be grounded in the brief or this file is `[open]`.
+No invented rules. Any criterion that cannot be reasoned from the brief, this file, or a reasonable Peasy default is `[open]` instead of `[assumed]`, and the PM must resolve it before the ticket moves to engineering.
 
 ### 2. The HTML prototype
 
@@ -296,7 +303,11 @@ A single self-contained HTML file (or an Artifact if the client's Claude surface
 - Does not include analytics, tracking scripts, or external images beyond the Google Fonts stylesheet.
 - Falls in the 3–7% visual variance band from the live site — recognizably Peasy, deliberately not a trace.
 
-If the brief describes a surface shape this file does not carry a component for, the prototype renders an honest placeholder card that says what is missing and asks the PM to extend the design system. Never invent a component.
+If the brief describes a surface shape this file does not carry a component for, the prototype renders an honest placeholder card that says what is missing and logs the gap as an assumption. Never invent a component silently.
+
+### 3. The PM's turn
+
+The PM reads the Assumptions log first. For each line, they either accept it (nothing to do) or paste a one-line correction back to the skill ("#2: this is for returning users, not new ones"; "#5: no French needed for v1"). The skill revises both artifacts and the log in one pass. Two or three correction cycles is the expected shape of the collaboration; most briefs land in one.
 
 ---
 
