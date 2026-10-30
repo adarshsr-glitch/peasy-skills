@@ -1,0 +1,236 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+<!-- Example output of peasy-brainstormer v0.2 (SSO with itsme, Google, Apple). -->
+<title>SSO Login Ticket</title>
+<style>
+  :root{--ink:#17192B;--ink2:#464755;--ink3:#747580;--muted:#A2A3AA;--line:#DDDDDD;--soft:#E4E4E4;
+    --bg:#F5F5F5;--card:#FFFFFF;--purple:#394295;--blue:#66C6E2;--blue1:#E0F4F9;--pink1:#FCEDF4;--cream:#F9F4EA;
+    --green:#009B67;--warn:#F5C011;--warn1:#FEF6DB;--err:#F24236}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Grold Rounded Slim","Nunito","Varela Round",system-ui,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 64px}
+  .crumbs{font-size:13px;color:var(--ink3);margin-bottom:8px}
+  .crumbs b{color:var(--purple)}
+  h1{font-size:26px;line-height:1.25;font-weight:600;margin:4px 0 16px}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:0 0 10px}
+  h3{font-size:16px;margin:0}
+  p{margin:0 0 8px}
+  ul{margin:0;padding-left:20px}
+  li{margin:2px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--soft);vertical-align:top}
+  th{color:var(--ink2);font-weight:600;background:#FAFAFA}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.two{grid-template-columns:1fr}}
+  .in h3{color:var(--green)} .out h3{color:var(--ink3)}
+  .story{border:1px solid var(--soft);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+  .story-head{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .sid{font-weight:700;color:var(--purple)}
+  .pts{background:var(--blue1);border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+  .ac{margin-top:6px;font-size:14px}
+  .ac div{padding:4px 0 4px 10px;border-left:3px solid var(--blue);margin:6px 0}
+  .ac b{color:var(--ink2)}
+  .meta dt{font-size:12px;color:var(--ink3);margin-top:12px}
+  .meta dd{margin:2px 0 0;font-weight:500}
+  .pill{display:inline-block;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .status{background:var(--blue1);color:#1E6A80}
+  .prio{background:var(--warn1);color:#7A5C00}
+  .lbl{background:#EEF0F7;color:var(--purple)}
+  .assume{background:var(--cream);border-radius:12px;padding:12px 14px}
+  .assume li::marker{color:var(--warn)}
+  .oq li{margin:6px 0}
+  .owner{font-size:12px;color:var(--ink3)}
+  .todo{color:var(--muted);font-style:italic}
+  .attach a{color:var(--purple);font-weight:600}
+  .frame{width:100%;height:560px;border:1px solid var(--line);border-radius:12px;margin-top:12px;background:#fff}
+  .note{font-size:12px;color:var(--ink3)}
+</style>
+
+
+<div class="wrap">
+
+  <div class="crumbs">Peasy / Epics / <b>PEASY-XXX</b></div>
+  <h1>Let users log in with itsme, Google and Apple</h1>
+
+  <div class="grid">
+    <main>
+
+      <section class="card">
+        <h2>Summary</h2>
+        <p>Peasy login is email + password only. Belgian users expect to sign in with itsme, Google or Apple. This epic adds those three providers, links them to existing accounts and pre-fills the profile from itsme so insurance and mortgage quotes need fewer fields.</p>
+      </section>
+
+      <section class="card">
+        <h2>Context</h2>
+        <ul>
+          <li>itsme is Belgium's national digital ID app (eIDAS high), widely used for banking and government services.</li>
+          <li>Insurance and mortgage quotes ask for name, address and date of birth; itsme can supply these verified.</li>
+          <li>Current behaviour: email + password with "Forgot password", no social login.</li>
+          <li>itsme has 8M+ users in Belgium and is eIDAS-notified at assurance level high.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Scope</h2>
+        <div class="two">
+          <div class="in"><h3>In scope</h3><ul>
+            <li>Sign up / log in with itsme, Google, Apple (web)</li>
+            <li>Auto-link to existing account on verified matching email</li>
+            <li>Profile pre-fill from itsme (name, address, date of birth)</li>
+            <li>GDPR consent screen for itsme data (nl-BE)</li>
+          </ul></div>
+          <div class="out"><h3>Out of scope</h3><ul>
+            <li>Hypotheek.winkel, Verzekeringen.be, Aanbieders.be (phase 2)</li>
+            <li>Mobile app</li>
+            <li>Removing email + password</li>
+            <li>itsme e-signature for contracts</li>
+          </ul></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Decisions made</h2>
+        <table>
+          <tr><th>Question</th><th>Answer</th></tr>
+          <tr><td>Providers in v1</td><td>itsme, Google, Apple</td></tr>
+          <tr><td>Existing email accounts</td><td>Auto-link when the provider returns a verified matching email</td></tr>
+          <tr><td>Pre-fill from itsme</td><td>Name, address, date of birth; user can edit before saving</td></tr>
+          <tr><td>Sister brands</td><td>Peasy only for v1; Hypotheek.winkel and Verzekeringen.be later</td></tr>
+          <tr><td>Email + password</td><td>Kept as fallback</td></tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>User stories</h2>
+
+        <div class="story">
+          <div class="story-head"><h3><span class="sid">S1</span> Log in with itsme</h3><span class="pts">5 pts</span></div>
+          <p>As a Belgian user, I want to log in with itsme, so that I don't need another password.</p>
+          <div class="ac">
+            <div><b>Given</b> I'm on the login page <b>When</b> I choose "Inloggen met itsme" and approve in the app <b>Then</b> I'm logged in and land on my dashboard.</div>
+            <div><b>Given</b> I cancel in the itsme app <b>When</b> I return to Peasy <b>Then</b> I see "Inloggen geannuleerd. Probeer opnieuw of kies een andere manier." and no account is created.</div>
+            <div><b>Given</b> itsme is unavailable <b>When</b> I try to log in <b>Then</b> I see an error banner and the other login options stay usable.</div>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-head"><h3><span class="sid">S2</span> Log in with Google or Apple</h3><span class="pts">3 pts</span></div>
+          <p>As a user, I want to log in with Google or Apple, so that signing up takes one click.</p>
+          <div class="ac">
+            <div><b>Given</b> I choose Google or Apple <b>When</b> the provider returns a verified email <b>Then</b> an account is created or I'm logged in.</div>
+            <div><b>Given</b> Apple returns a private relay email <b>When</b> the account is created <b>Then</b> we store the relay address and don't ask for the real one.</div>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-head"><h3><span class="sid">S3</span> Link to my existing account</h3><span class="pts">5 pts</span></div>
+          <p>As an existing email user, I want my new login method linked to my account, so that I keep my comparisons and contracts.</p>
+          <div class="ac">
+            <div><b>Given</b> a provider returns a verified email matching an existing account <b>When</b> I log in <b>Then</b> the provider is linked and I see a confirmation.</div>
+            <div><b>Given</b> the email is not verified by the provider <b>When</b> I log in <b>Then</b> we ask for my Peasy password before linking.</div>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-head"><h3><span class="sid">S4</span> Pre-fill my profile from itsme</h3><span class="pts">3 pts</span></div>
+          <p>As a user requesting an insurance or mortgage quote, I want my details filled from itsme, so that I type less and avoid mistakes.</p>
+          <div class="ac">
+            <div><b>Given</b> I log in with itsme for the first time <b>When</b> I give consent <b>Then</b> name, address and date of birth are shown pre-filled and editable.</div>
+            <div><b>Given</b> my itsme data differs from my saved profile <b>When</b> I log in <b>Then</b> I see the differences and choose which to keep.</div>
+            <div><b>Given</b> I decline consent <b>When</b> I continue <b>Then</b> I'm logged in without pre-fill.</div>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-head"><h3><span class="sid">S5</span> Manage login methods</h3><span class="pts">2 pts</span></div>
+          <p>As a user, I want to see and unlink my login methods, so that I stay in control of my account.</p>
+          <div class="ac">
+            <div><b>Given</b> I have two or more login methods <b>When</b> I unlink one <b>Then</b> it's removed and I get a confirmation email.</div>
+            <div><b>Given</b> I have only one login method <b>When</b> I try to unlink it <b>Then</b> the action is disabled with an explanation.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>UX copy</h2>
+        <table>
+          <tr><th>Key</th><th>nl-BE</th><th>fr-BE</th></tr>
+          <tr><td>login.itsme</td><td>Inloggen met itsme</td><td class="todo">[FR: todo]</td></tr>
+          <tr><td>login.google</td><td>Verder met Google</td><td class="todo">[FR: todo]</td></tr>
+          <tr><td>login.apple</td><td>Verder met Apple</td><td class="todo">[FR: todo]</td></tr>
+          <tr><td>consent.itsme</td><td>Mogen we je naam, adres en geboortedatum van itsme gebruiken om je profiel in te vullen?</td><td class="todo">[FR: todo]</td></tr>
+          <tr><td>link.success</td><td>Gelukt! Je kan nu ook inloggen met itsme.</td><td class="todo">[FR: todo]</td></tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Non-functional</h2>
+        <ul>
+          <li><b>Privacy:</b> consent-based pre-fill; don't store the national register number; log consent with timestamp; update privacy policy (controller Verzekeringen NV). [Legal text: todo]</li>
+          <li><b>Security:</b> OIDC with PKCE; state + nonce checks; session length unchanged.</li>
+          <li><b>Accessibility:</b> WCAG 2.2 AA; provider buttons keyboard-reachable with visible focus.</li>
+          <li><b>Analytics:</b> <code>login_method_selected</code>, <code>login_success</code>, <code>login_failed</code>, <code>account_linked</code>, <code>prefill_consent</code>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Dependencies</h2>
+        <ul>
+          <li>itsme partner contract and test environment</li>
+          <li>Apple developer account: Sign in with Apple service ID</li>
+          <li>Legal review of consent wording (NL + FR)</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Assumptions</h2>
+        <div class="assume"><ul>
+          <li><b>Assumption:</b> Google and Apple emails are treated as verified.</li>
+          <li><b>Assumption:</b> Existing auth service supports multiple identities per user.</li>
+        </ul></div>
+      </section>
+
+      <section class="card">
+        <h2>Open questions</h2>
+        <ol class="oq">
+          <li>Which itsme assurance level and scopes do we need for insurance quotes? <span class="owner">Owner: Tech + Legal</span></li>
+          <li>When do Hypotheek.winkel and Verzekeringen.be get shared login, and does the Meilleurtaux deal change the plan? <span class="owner">Owner: Product</span></li>
+          <li>Retention period for itsme-sourced data after account deletion? <span class="owner">Owner: Legal</span></li>
+        </ol>
+      </section>
+
+      <section class="card attach">
+        <h2>Attachments</h2>
+        <!-- Artifact URL: keep the link, DELETE the iframe (claude.ai pages can't be embedded).
+             Local HTML mockup: link + keep iframe with relative src; publish the file alongside the ticket.
+             No mockup: delete both, write "No mockup yet". -->
+        <p>Mockup: <a href="login-sso-mockup.html" target="_blank" rel="noopener">login-sso-mockup.html</a> <span class="note">(generated by peasy-design, Voorbeelddata)</span></p>
+        <iframe class="frame" title="Mockup preview" src="login-sso-mockup.html"></iframe>
+      </section>
+
+    </main>
+
+    <aside class="card meta">
+      <h2>Details</h2>
+      <dl>
+        <dt>Status</dt><dd><span class="pill status">To groom</span></dd>
+        <dt>Type</dt><dd>Epic</dd>
+        <dt>Priority</dt><dd><span class="pill prio">High</span></dd>
+        <dt>Labels</dt><dd><span class="pill lbl">identity</span><span class="pill lbl">nl-fr</span><span class="pill lbl">gdpr</span></dd>
+        <dt>Components</dt><dd>Web, Back-office</dd>
+        <dt>Brands</dt><dd>Peasy</dd>
+        <dt>Reporter</dt><dd>Product</dd>
+        <dt>Estimate</dt><dd>18 pts <span class="note">(rough)</span></dd>
+        <dt>Created by</dt><dd>peasy-brainstormer</dd>
+      </dl>
+    </aside>
+  </div>
+</div>
+
+
+
+</body></html>
